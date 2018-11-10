@@ -34,6 +34,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 import Player from './../../components/Player';
+import Grid from '../Grid';
 
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
@@ -95,6 +96,8 @@ export class HomePage extends React.PureComponent {
           </Section>
 
           <Player />
+
+          <Grid />
           
         </div>
       </article>

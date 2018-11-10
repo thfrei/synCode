@@ -113,7 +113,7 @@ export default class PlayerControlExample extends Component {
       <div>
         <VideoReactPlayer
           ref="player"
-          autoPlay
+          // autoPlay
         >
           <source src={this.state.source} />
           <ControlBar autoHide={false} />
@@ -146,10 +146,10 @@ export default class PlayerControlExample extends Component {
           <Button onClick={this.changeSource('bunnyMovie')} className="mr-3">Bunny movie</Button>
           <Button onClick={this.changeSource('test')} className="mr-3">Test movie</Button>
         </div>
-        <div>State</div>
+        {/* <div>State</div>
         <pre>
           {JSON.stringify(this.state.player, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     );
   }
