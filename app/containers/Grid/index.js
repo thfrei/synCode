@@ -28,6 +28,9 @@ import { Player } from '../../components/Player';
 
 const GridItem = styled.div`
   background-color: white;
+  overflow: hidden;
+  width: auto;
+  height: auto;
 `;
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -37,27 +40,35 @@ class Grid extends React.Component {
   render() {
     // {lg: layout1, md: layout2, ...}
     const layout = [
-      { i: 'a', x: 0, y: 4, w: 5, h: 3, static: true },
-      { i: "b", x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
-      { i: 'c', x: 4, y: 0, w: 3, h: 2 },
+      { i: 'a', x: 0, y: 0, w: 7, h: 5 },
+      { i: 'b', x: 7, y: 0, w: 5, h: 5 },
+      { i: 'c', x: 0, y: 5, w: 4, h: 5 },
+      { i: 'd', x: 4, y: 5, w: 4, h: 5 },
+      { i: 'e', x: 8, y: 5, w: 4, h: 5 },
+      { i: 'f', x: 0, y: 10, w: 3, h: 2 },
     ];
     const layouts = {
       lg: layout,
-    }
+    };
     return (
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
-        // breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        // cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        // verticalCompact="false"
-        // rowHeight={30}
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        verticalCompact="false"
+        rowHeight={70}
       >
         <GridItem key="a">
-          {/* <Player /> */}
+          <Player />
         </GridItem>
-        <GridItem key="b">asdf</GridItem>
-        <GridItem key="c">3</GridItem>
+        <GridItem key="b">b</GridItem>
+        <GridItem key="c">
+          <Player /></GridItem>
+        <GridItem key="d">
+          <Player /></GridItem>
+        <GridItem key="e">e</GridItem>
+        <GridItem key="f">f</GridItem>
       </ResponsiveGridLayout>
     );
   }
