@@ -21,7 +21,7 @@ const sources = {
   test: 'http://media.w3.org/2010/05/video/movie_300.webm',
 };
 
-export default class PlayerControlExample extends Component {
+class PlayerControlExample extends Component {
   constructor(props, context) {
     super(props, context);
 
