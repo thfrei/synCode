@@ -36,11 +36,14 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 class Grid extends React.Component {
   render() {
     // {lg: layout1, md: layout2, ...}
-    const layouts = [
+    const layout = [
       { i: 'a', x: 0, y: 4, w: 5, h: 3, static: true },
       { i: "b", x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
-      { i: 'ff', x: 4, y: 0, w: 1, h: 2 },
+      { i: 'c', x: 4, y: 0, w: 3, h: 2 },
     ];
+    const layouts = {
+      lg: layout,
+    }
     return (
       <ResponsiveGridLayout
         className="layout"
@@ -50,7 +53,7 @@ class Grid extends React.Component {
         // verticalCompact="false"
         // rowHeight={30}
       >
-        <GridItem key="ff" data-grid={{x: 2, y: 2, w: 3, h: 2}}>
+        <GridItem key="a">
           {/* <Player /> */}
         </GridItem>
         <GridItem key="b">asdf</GridItem>
