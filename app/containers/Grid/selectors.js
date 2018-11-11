@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
+import Immutable from 'immutable';
 import { initialState } from './reducer';
+import { toString } from 'lodash';
 
 /**
  * Direct selector to the grid state domain
@@ -7,16 +9,24 @@ import { initialState } from './reducer';
 
 const selectGridDomain = state => state.get('grid', initialState);
 
-/**
- * Other specific selectors
- */
+export const selectComponentItem = (_, props) => props.item;
 
-/**
- * Default selector used by Grid
- */
+export const selectGridItems = createSelector(selectGridDomain, substate =>
+  substate.get('items'),
+);
 
-const makeSelectGrid = () =>
-  createSelector(selectGridDomain, substate => substate.toJS());
+export const selectItem = createSelector(
+  [selectGridItems, selectComponentItem],
+  (items, id) => items.find(item => item.get('id') === id) || Immutable.Map(),
+);
 
-export default makeSelectGrid;
-export { selectGridDomain };
+export const selectLayout = createSelector(selectGridItems, items =>
+  items.map(item => ({
+    i: toString(item.get('id')),
+    x: item.get('x'),
+    y: item.get('y'),
+    w: item.get('w'),
+    h: item.get('h'),
+    static: item.get('static'),
+  })),
+);

@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { toString } from 'lodash';
 
 import styled from 'styled-components';
 
@@ -19,7 +20,7 @@ import 'react-resizable/css/styles.css';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectGrid from './selectors';
+import { selectGridItems, selectLayout } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
@@ -39,17 +40,11 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 class Grid extends React.Component {
   render() {
     // {lg: layout1, md: layout2, ...}
-    const layout = [
-      { i: 'a', x: 0, y: 0, w: 7, h: 5 },
-      { i: 'b', x: 7, y: 0, w: 5, h: 5 },
-      { i: 'c', x: 0, y: 5, w: 4, h: 5 },
-      { i: 'd', x: 4, y: 5, w: 4, h: 5 },
-      { i: 'e', x: 8, y: 5, w: 4, h: 5 },
-      { i: 'f', x: 0, y: 10, w: 3, h: 2 },
-    ];
     const layouts = {
-      lg: layout,
+      lg: this.props.layout.toJS(),
     };
+
+    console.log(this.props.items);
     return (
       <ResponsiveGridLayout
         className="layout"
@@ -59,16 +54,11 @@ class Grid extends React.Component {
         verticalCompact="false"
         rowHeight={70}
       >
-        <GridItem key="a">
-          <Player />
-        </GridItem>
-        <GridItem key="b">b</GridItem>
-        <GridItem key="c">
-          <Player /></GridItem>
-        <GridItem key="d">
-          <Player /></GridItem>
-        <GridItem key="e">e</GridItem>
-        <GridItem key="f">f</GridItem>
+        {
+          this.props.items.valueSeq().map(item => (
+            <GridItem key={toString(item.get('id'))}>{item.get('id')}</GridItem>
+          ))
+        }
       </ResponsiveGridLayout>
     );
   }
@@ -79,7 +69,8 @@ Grid.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  grid: makeSelectGrid(),
+  items: selectGridItems,
+  layout: selectLayout,
 });
 
 function mapDispatchToProps(dispatch) {
