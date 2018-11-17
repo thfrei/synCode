@@ -31,10 +31,10 @@ export default function App() {
       </Helmet>
       {/* <Header /> */}
       <Switch>
-        <Route exact path="/" component={Grid} />
-        <Route path="" component={NotFoundPage} />
+        <Route path="/" component={Grid} />
+        {/* <Route path="" component={NotFoundPage} /> */}
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
       <GlobalStyle />
     </div>
   );

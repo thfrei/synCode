@@ -14,9 +14,10 @@ export const initialState = fromJS({
     gridItem(2, EDITOR, 8, 0, 4, 6),
     gridItem(3, VIDEO, 0, 6, 4, 6),
     gridItem(4, VIDEO, 4, 6, 4, 6),
-    gridItem(5, AUDIO, 8, 6, 4, 6),
-    gridItem(6, AUDIO, 0, 12, 8, 3),
-  ]
+    gridItem(5, AUDIO, 8, 6, 4, 3),
+    gridItem(6, AUDIO, 8, 9, 4, 3),
+  ],
+  editable: false,
 });
 
 function gridItem(id, type, x, y, w, h) {
