@@ -11,6 +11,7 @@
  */
 
 import { fromJS } from 'immutable';
+import { PLAY } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
@@ -22,6 +23,8 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case PLAY:
+      return state.set('playing', !!action.playing);
     default:
       return state;
   }

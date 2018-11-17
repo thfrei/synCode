@@ -26,6 +26,9 @@ import saga from './saga';
 // import messages from './messages';
 
 import { Player } from '../../components/Player';
+import { VIDEO, EDITOR, CONTROL } from './constants';
+import Control from '../Control/Loadable';
+import { selectGlobalPlaying } from '../App/selectors';
 
 const GridItem = styled.div`
   background-color: white;
@@ -38,13 +41,18 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 /* eslint-disable react/prefer-stateless-function */
 class Grid extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.renderContent = this.renderContent.bind(this);
+  }
+
   render() {
     // {lg: layout1, md: layout2, ...}
     const layouts = {
       lg: this.props.layout.toJS(),
     };
 
-    console.log(this.props.items);
     return (
       <ResponsiveGridLayout
         className="layout"
@@ -54,13 +62,42 @@ class Grid extends React.Component {
         verticalCompact="false"
         rowHeight={70}
       >
-        {
-          this.props.items.valueSeq().map(item => (
-            <GridItem key={toString(item.get('id'))}>{item.get('id')}</GridItem>
-          ))
-        }
+        {this.props.items.valueSeq().map(item => (
+          <GridItem key={toString(item.get('id'))}>
+            {/* {item.get('id')} */}
+            {item.get('type')}
+            {this.renderContent(item)}
+          </GridItem>
+        ))}
       </ResponsiveGridLayout>
     );
+  }
+
+  renderContent(item) {
+    const {globalPlay} = this.props;
+
+    switch (item.get('type')) {
+      case VIDEO:
+        return <Player test="5" play={globalPlay} />;
+      case EDITOR:
+        return (
+          <div>
+            <textarea
+              style={{
+                width: '100%',
+                height: '100%',
+                minHeight: '300px',
+                backgroundColor: '#EFEFEF',
+                border: '1px solid black',
+              }}
+            />
+          </div>
+        );
+      case CONTROL:
+        return <Control />;
+      default:
+        break;
+    }
   }
 }
 
@@ -68,9 +105,10 @@ Grid.propTypes = {
   // dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = (state, props) => createStructuredSelector({
   items: selectGridItems,
   layout: selectLayout,
+  globalPlay: selectGlobalPlaying,
 });
 
 function mapDispatchToProps(dispatch) {
