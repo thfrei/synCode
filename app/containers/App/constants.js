@@ -10,3 +10,4 @@
  */
 
 export const PLAY = 'synCode/App/PLAY';
+export const SET_TIME = 'synCode/App/SET_TIME';

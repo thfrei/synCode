@@ -63,6 +63,11 @@ class PlayerControlExample extends Component {
     if (!prevProps.play && this.props.play) {
       this.play();
     }
+
+    if (this.props.setTime !== prevProps.setTime && this.props.setTime) {
+      console.log('seek', this.props.setTime);
+      this.seek(this.props.setTime);
+    }
   }
 
   render() {
@@ -71,6 +76,7 @@ class PlayerControlExample extends Component {
         <VideoReactPlayer ref="player" height="100%" fluid>
           <source src={this.state.source} />
         </VideoReactPlayer>
+        <Button onClick={this.seek(50)} className="mr-3">currentTime = 50</Button>
         {/* <div className="py-3">
           <Button onClick={this.play} className="mr-3">play()</Button>
           <Button onClick={this.pause} className="mr-3">pause()</Button>

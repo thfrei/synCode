@@ -28,7 +28,7 @@ import saga from './saga';
 import { Player } from '../../components/Player';
 import { VIDEO, EDITOR, CONTROL } from './constants';
 import Control from '../Control/Loadable';
-import { selectGlobalPlaying } from '../App/selectors';
+import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
 
 const GridItem = styled.div`
   background-color: white;
@@ -74,11 +74,11 @@ class Grid extends React.Component {
   }
 
   renderContent(item) {
-    const {globalPlay} = this.props;
+    const {globalPlay, setTime} = this.props;
 
     switch (item.get('type')) {
       case VIDEO:
-        return <Player test="5" play={globalPlay} />;
+        return <Player test="5" play={globalPlay} setTime={setTime} />;
       case EDITOR:
         return (
           <div>
@@ -109,6 +109,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
   items: selectGridItems,
   layout: selectLayout,
   globalPlay: selectGlobalPlaying,
+  setTime: selectGlobalSetTime,
 });
 
 function mapDispatchToProps(dispatch) {

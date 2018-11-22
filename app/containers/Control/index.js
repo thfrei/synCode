@@ -18,15 +18,18 @@ import makeSelectControl from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { play } from '../App/actions';
+import { play, setTime } from '../App/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 class Control extends React.Component {
   render() {
+    console.log('hi');
     return (
       <div>
         <Button onClick={() => this.props.dispatch(play(true))}>P</Button>
         <Button onClick={() => this.props.dispatch(play(false))}>||</Button>
+        <Button onClick={() => this.props.dispatch(setTime(40))}>40</Button>
+        <Button onClick={() => this.props.dispatch(setTime(10))}>10</Button>
       </div>
     );
   }
