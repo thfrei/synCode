@@ -4,7 +4,7 @@
  *
  */
 
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 import React, { Component } from 'react';
@@ -33,6 +33,8 @@ class PlayerControlExample extends Component {
       source: sources.bunnyMovie,
     };
 
+    this.myRef = React.createRef();
+
     this.play = this.play.bind(this);
     this.pause = this.pause.bind(this);
     this.load = this.load.bind(this);
@@ -45,7 +47,7 @@ class PlayerControlExample extends Component {
 
   componentDidMount() {
     // subscribe state change
-    this.refs.player.subscribeToStateChange(this.handleStateChange.bind(this));
+    // this.myRef.current.subscribeToStateChange(this.handleStateChange.bind(this));
   }
 
   handleStateChange(state, prevState) {
@@ -66,14 +68,15 @@ class PlayerControlExample extends Component {
 
     if (this.props.setTime !== prevProps.setTime && this.props.setTime) {
       console.log('seek', this.props.setTime);
-      this.seek(this.props.setTime);
+      this.seek(_.toNumber(this.props.setTime));
     }
   }
 
   render() {
+    // console.log(this.props, this.myRef.current)
     return (
       <div>
-        <VideoReactPlayer ref="player" height="100%" fluid>
+        <VideoReactPlayer ref={this.myRef} height="100%" fluid>
           <source src={this.state.source} />
         </VideoReactPlayer>
         <Button onClick={this.seek(50)} className="mr-3">currentTime = 50</Button>
@@ -114,50 +117,50 @@ class PlayerControlExample extends Component {
   }
   
   play() {
-    this.refs.player.play();
+    this.myRef.current.play();
   }
 
   pause() {
-    this.refs.player.pause();
+    this.myRef.current.pause();
   }
 
   load() {
-    this.refs.player.load();
+    this.myRef.current.load();
   }
 
   changeCurrentTime(seconds) {
     return () => {
-      const { player } = this.refs.player.getState();
+      const { player } = this.myRef.current.getState();
       const currentTime = player.currentTime;
-      this.refs.player.seek(currentTime + seconds);
+      this.myRef.current.seek(currentTime + seconds);
     };
   }
 
   seek(seconds) {
     return () => {
-      this.refs.player.seek(seconds);
+      this.myRef.current.seek(seconds);
     };
   }
 
   changePlaybackRateRate(steps) {
     return () => {
-      const { player } = this.refs.player.getState();
+      const { player } = this.myRef.current.getState();
       const playbackRate = player.playbackRate;
-      this.refs.player.playbackRate = playbackRate + steps;
+      this.myRef.current.playbackRate = playbackRate + steps;
     };
   }
 
   changeVolume(steps) {
     return () => {
-      const { player } = this.refs.player.getState();
+      const { player } = this.myRef.current.getState();
       const volume = player.volume;
-      this.refs.player.volume = volume + steps;
+      this.myRef.current.volume = volume + steps;
     };
   }
 
   setMuted(muted) {
     return () => {
-      this.refs.player.muted = muted;
+      this.myRef.current.muted = muted;
     };
   }
 
@@ -166,11 +169,9 @@ class PlayerControlExample extends Component {
       this.setState({
         source: sources[name],
       });
-      this.refs.player.load();
+      this.myRef.current.load();
     };
   }
-
-
 }
 
 PlayerControlExample.propTypes = {};

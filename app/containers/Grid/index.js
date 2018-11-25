@@ -78,7 +78,7 @@ class Grid extends React.Component {
 
     switch (item.get('type')) {
       case VIDEO:
-        return <Player test="5" play={globalPlay} setTime={setTime} />;
+        return <Player test="5" play={globalPlay} setTime={setTime} item={item} />;
       case EDITOR:
         return (
           <div>
