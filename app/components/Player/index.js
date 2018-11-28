@@ -31,6 +31,8 @@ class PlayerControlExample extends Component {
 
     this.state = {
       source: sources.bunnyMovie,
+      player: {},
+      offset: 0
     };
 
     this.myRef = React.createRef();
@@ -52,9 +54,9 @@ class PlayerControlExample extends Component {
 
   handleStateChange(state, prevState) {
     // copy player state to this component's state
-    this.setState({
-      player: state,
-    });
+    // this.setState({
+    //   player: state,
+    // });
   }
 
   componentDidUpdate(prevProps) {
@@ -68,18 +70,26 @@ class PlayerControlExample extends Component {
 
     if (this.props.setTime !== prevProps.setTime && this.props.setTime) {
       console.log('seek', this.props.setTime);
-      this.seek(_.toNumber(this.props.setTime));
+      this.seek(this.props.setTime)();
     }
+
+    if (this.props.offset !== prevProps.offset && this.props.offset) {
+      const { player } = this.myRef.current.getState();
+      const currentTime = player.currentTime;
+      this.seek(currentTime + this.props.offset - prevProps.offset || 0)();
+    } 
   }
 
   render() {
-    // console.log(this.props, this.myRef.current)
+    const { item } = this.props;
+    //console.log(this.props, this.myRef.current)
     return (
       <div>
-        <VideoReactPlayer ref={this.myRef} height="100%" fluid>
+        <VideoReactPlayer ref={this.myRef} height="100%" fluid muted>
           <source src={this.state.source} />
         </VideoReactPlayer>
         <Button onClick={this.seek(50)} className="mr-3">currentTime = 50</Button>
+        <Button onClick={() => this.props.updateOffset(item.get('id'), 1)} className="mr-3">+1s</Button>
         {/* <div className="py-3">
           <Button onClick={this.play} className="mr-3">play()</Button>
           <Button onClick={this.pause} className="mr-3">pause()</Button>

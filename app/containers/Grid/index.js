@@ -29,6 +29,7 @@ import { Player } from '../../components/Player';
 import { VIDEO, EDITOR, CONTROL } from './constants';
 import Control from '../Control/Loadable';
 import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
+import { updateOffset } from './actions';
 
 const GridItem = styled.div`
   background-color: white;
@@ -74,11 +75,11 @@ class Grid extends React.Component {
   }
 
   renderContent(item) {
-    const {globalPlay, setTime} = this.props;
+    const {globalPlay, setTime, ...rest} = this.props;
 
     switch (item.get('type')) {
       case VIDEO:
-        return <Player test="5" play={globalPlay} setTime={setTime} item={item} />;
+        return <Player test="5" play={globalPlay} setTime={setTime} item={item} offset={item.get('offset')} {...rest} />;
       case EDITOR:
         return (
           <div>
@@ -115,6 +116,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    updateOffset: (id, time) => dispatch(updateOffset(id, time)),
   };
 }
 
