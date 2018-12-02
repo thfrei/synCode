@@ -80,6 +80,7 @@
     "prop-types": "15.6.2",
     "react": "16.6.0",
     "react-dom": "16.6.0",
+    "react-draggable": "3.0.5",
     "react-grid-layout": "^0.16.6",
     "react-helmet": "5.2.0",
     "react-intl": "2.7.2",
@@ -93,7 +94,8 @@
     "sanitize.css": "4.1.0",
     "styled-components": "4.0.2",
     "video-react": "^0.13.1",
-    "warning": "4.0.2"
+    "warning": "4.0.2",
+    "wavesurfer.js": "^2.1.1"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",

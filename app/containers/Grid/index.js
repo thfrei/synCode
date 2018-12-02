@@ -26,10 +26,11 @@ import saga from './saga';
 // import messages from './messages';
 
 import { Player } from '../../components/Player';
-import { VIDEO, EDITOR, CONTROL } from './constants';
+import { VIDEO, EDITOR, CONTROL, AUDIO } from './constants';
 import Control from '../Control/Loadable';
 import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
 import { updateOffset } from './actions';
+import { WavesurferComponent } from '../../components/WavesurferComponent';
 
 const GridItem = styled.div`
   background-color: white;
@@ -66,7 +67,7 @@ class Grid extends React.Component {
         {this.props.items.valueSeq().map(item => (
           <GridItem key={toString(item.get('id'))}>
             {/* {item.get('id')} */}
-            {item.get('type')}
+            {item.get('type')} a
             {this.renderContent(item)}
           </GridItem>
         ))}
@@ -96,6 +97,9 @@ class Grid extends React.Component {
         );
       case CONTROL:
         return <Control />;
+      case AUDIO:
+        //return <WavesurferComponent />;
+        return null;
       default:
         break;
     }
