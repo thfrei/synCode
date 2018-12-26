@@ -86,7 +86,7 @@
     "react-intl": "2.7.2",
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",
-    "react-wavesurfer": "^0.8.6",
+    "react-sound": "^1.2.0",
     "redux": "4.0.1",
     "redux-immutable": "4.0.0",
     "redux-saga": "0.16.2",
@@ -94,8 +94,7 @@
     "sanitize.css": "4.1.0",
     "styled-components": "4.0.2",
     "video-react": "^0.13.1",
-    "warning": "4.0.2",
-    "wavesurfer.js": "^2.1.1"
+    "warning": "4.0.2"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",
