@@ -23,6 +23,7 @@ const sources = {
   bunnyTrailer: 'http://media.w3.org/2010/05/bunny/trailer.mp4',
   bunnyMovie: 'http://media.w3.org/2010/05/bunny/movie.mp4',
   test: 'http://media.w3.org/2010/05/video/movie_300.webm',
+  audio: "http://www.hochmuth.com/mp3/Boccherini_Concerto_478-1.mp3",
 };
 
 class PlayerControlExample extends Component {
@@ -32,7 +33,7 @@ class PlayerControlExample extends Component {
     this.state = {
       source: sources.bunnyMovie,
       player: {},
-      offset: 0
+      offset: 0,
     };
 
     this.myRef = React.createRef();
@@ -77,14 +78,14 @@ class PlayerControlExample extends Component {
       const { player } = this.myRef.current.getState();
       const currentTime = player.currentTime;
       this.seek(currentTime + this.props.offset - prevProps.offset || 0)();
-    } 
+    }
   }
 
   render() {
     const { item } = this.props;
-    //console.log(this.props, this.myRef.current)
+    // console.log(this.props, this.myRef.current)
     return (
-      <div style={{height: "100%"}}>
+      <div style={{ height: '100%' }}>
         <VideoReactPlayer ref={this.myRef} height="90%" fluid={false} muted>
           <source src={this.state.source} />
         </VideoReactPlayer>
@@ -125,7 +126,7 @@ class PlayerControlExample extends Component {
       </div>
     );
   }
-  
+
   play() {
     this.myRef.current.play();
   }

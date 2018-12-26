@@ -26,6 +26,7 @@ import saga from './saga';
 // import messages from './messages';
 
 import { Player } from '../../components/Player';
+import { AudioPlayer } from '../../containers/AudioPlayer';
 import { VIDEO, EDITOR, CONTROL, AUDIO } from './constants';
 import Control from '../Control/Loadable';
 import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
@@ -98,8 +99,7 @@ class Grid extends React.Component {
       case CONTROL:
         return <Control />;
       case AUDIO:
-        //return <WavesurferComponent />;
-        return null;
+        return <AudioPlayer play={globalPlay} setTime={setTime} item={item} offset={item.get('offset')} {...rest}  />;
       default:
         break;
     }
