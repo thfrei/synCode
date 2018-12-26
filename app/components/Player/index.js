@@ -84,12 +84,12 @@ class PlayerControlExample extends Component {
     const { item } = this.props;
     //console.log(this.props, this.myRef.current)
     return (
-      <div>
-        <VideoReactPlayer ref={this.myRef} height="100%" fluid muted>
+      <div style={{height: "100%"}}>
+        <VideoReactPlayer ref={this.myRef} height="90%" fluid={false} muted>
           <source src={this.state.source} />
         </VideoReactPlayer>
-        <Button onClick={this.seek(50)} className="mr-3">currentTime = 50</Button>
-        <Button onClick={() => this.props.updateOffset(item.get('id'), 1)} className="mr-3">+1s</Button>
+        {/* <Button onClick={this.seek(50)} className="mr-3">currentTime = 50</Button>
+        <Button onClick={() => this.props.updateOffset(item.get('id'), 1)} className="mr-3">+1s</Button> */}
         {/* <div className="py-3">
           <Button onClick={this.play} className="mr-3">play()</Button>
           <Button onClick={this.pause} className="mr-3">pause()</Button>

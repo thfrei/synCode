@@ -30,13 +30,13 @@ import { VIDEO, EDITOR, CONTROL, AUDIO } from './constants';
 import Control from '../Control/Loadable';
 import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
 import { updateOffset } from './actions';
-import { WavesurferComponent } from '../../components/WavesurferComponent';
 
 const GridItem = styled.div`
   background-color: white;
   overflow: hidden;
   width: auto;
   height: auto;
+  display: block;
 `;
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
