@@ -5,7 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
-import { VIDEO, AUDIO, EDITOR, CONTROL, UPDATE_OFFSET } from './constants';
+import { VIDEO, AUDIO, EDITOR, CONTROL, UPDATE_OFFSET, UPDATE_ITEM } from './constants';
 
 export const initialState = fromJS({
   nrOfGridItems: 6,
@@ -44,6 +44,18 @@ function gridReducer(state = initialState, action) {
           }
         )
       );
+    case UPDATE_ITEM: {
+      const {id, property, value} = action;
+      return state.update('items',
+        items => items.update(
+          items.findIndex(item => item.get('id') === id),
+          specificItem => {
+            console.log('spec', specificItem, value);
+            return specificItem.set(property, value);
+          }
+        )
+      );
+    }
     default:
       return state;
   }

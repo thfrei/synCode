@@ -23,7 +23,7 @@ const sources = {
   bunnyTrailer: 'http://media.w3.org/2010/05/bunny/trailer.mp4',
   bunnyMovie: 'http://media.w3.org/2010/05/bunny/movie.mp4',
   test: 'http://media.w3.org/2010/05/video/movie_300.webm',
-  audio: "http://www.hochmuth.com/mp3/Boccherini_Concerto_478-1.mp3",
+  audio: 'http://www.hochmuth.com/mp3/Boccherini_Concerto_478-1.mp3',
 };
 
 class PlayerControlExample extends Component {
@@ -31,7 +31,7 @@ class PlayerControlExample extends Component {
     super(props, context);
 
     this.state = {
-      source: sources.bunnyMovie,
+      source: sources.audio,
       player: {},
       offset: 0,
     };

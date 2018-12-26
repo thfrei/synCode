@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import * as _ from 'lodash';
 import Sound from 'react-sound';
 // soundManager.setup({ ignoreMobileRestrictions: true });
+import ReactPlayer from 'react-player';
 
 // import messages from './messages';
 
@@ -26,7 +27,7 @@ class AudioPlayer extends React.Component {
       <div>
         Sound: {this.playStatus(play)}
         Pos: {this.playFromPosition(setTime, offset)}
-        <Sound
+        {/* <Sound
           url="http://www.hochmuth.com/mp3/Boccherini_Concerto_478-1.mp3"
           playStatus={this.playStatus(play)}
           playFromPosition={this.playFromPosition(setTime, offset)}
@@ -34,7 +35,13 @@ class AudioPlayer extends React.Component {
           onLoad={console.log}
           onPlaying={console.log}
           volume={90}
-        />
+        /> */}
+        {/* <ReactPlayer 
+          url="http://www.hochmuth.com/mp3/Boccherini_Concerto_478-1.mp3"
+          playing={play}
+          controls
+          ref={this.ref}
+        /> */}
       </div>
     );
   }

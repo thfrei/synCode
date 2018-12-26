@@ -12,3 +12,4 @@ export const AUDIO = 'audio';
 export const CONTROL = 'control';
 
 export const UPDATE_OFFSET = 'UPDATE_OFFSET';
+export const UPDATE_ITEM = 'UPDATE_ITEM';
