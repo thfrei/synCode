@@ -17,6 +17,9 @@ import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
+// Material UI Theme
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 // Import root app
 import App from 'containers/App';
 
@@ -41,6 +44,16 @@ openSansObserver.load().then(() => {
   document.body.classList.add('fontLoaded');
 });
 
+// Material UI
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
+
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
@@ -50,9 +63,11 @@ const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <MuiThemeProvider theme={theme}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </MuiThemeProvider>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,

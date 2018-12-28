@@ -18,6 +18,8 @@ import styled from 'styled-components';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
+import Paper from '@material-ui/core/Paper';
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { selectGridItems, selectLayout } from './selectors';
@@ -26,14 +28,12 @@ import saga from './saga';
 // import messages from './messages';
 
 import { Player } from '../../components/Player';
-import { AudioPlayer } from '../../containers/AudioPlayer';
 import { VIDEO, EDITOR, CONTROL, AUDIO } from './constants';
 import Control from '../Control/Loadable';
 import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
 import { updateOffset } from './actions';
 
-const GridItem = styled.div`
-  background-color: white;
+const GridItem = styled(Paper)`
   overflow: hidden;
   width: auto;
   height: auto;
@@ -57,6 +57,7 @@ class Grid extends React.Component {
     };
 
     return (
+      <Paper>
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
@@ -67,12 +68,11 @@ class Grid extends React.Component {
       >
         {this.props.items.valueSeq().map(item => (
           <GridItem key={toString(item.get('id'))}>
-            {/* {item.get('id')} */}
-            {item.get('type')} a
             {this.renderContent(item)}
           </GridItem>
         ))}
       </ResponsiveGridLayout>
+      </Paper>
     );
   }
 
@@ -81,6 +81,7 @@ class Grid extends React.Component {
 
     switch (item.get('type')) {
       case VIDEO:
+      case AUDIO:
         return <Player test="5" play={globalPlay} setTime={setTime} item={item} offset={item.get('offset')} {...rest} />;
       case EDITOR:
         return (
@@ -98,8 +99,8 @@ class Grid extends React.Component {
         );
       case CONTROL:
         return <Control />;
-      case AUDIO:
-        return <AudioPlayer play={globalPlay} setTime={setTime} item={item} offset={item.get('offset')} {...rest}  />;
+      // case AUDIO:
+      //   return <AudioPlayer play={globalPlay} setTime={setTime} item={item} offset={item.get('offset')} {...rest}  />;
       default:
         break;
     }

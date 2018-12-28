@@ -11,8 +11,8 @@ export const initialState = fromJS({
   nrOfGridItems: 6,
   items: [
     gridItem(1, VIDEO, 0, 0, 8, 7),
-    gridItem(2, EDITOR, 8, 0, 4, 6),
-    gridItem(7, CONTROL, 8, 6, 4, 1),
+    gridItem(2, EDITOR, 8, 0, 4, 5),
+    gridItem(7, CONTROL, 8, 5, 4, 2),
     gridItem(3, VIDEO, 0, 7, 4, 4),
     gridItem(4, VIDEO, 4, 7, 4, 4),
     gridItem(5, AUDIO, 8, 7, 4, 2),
