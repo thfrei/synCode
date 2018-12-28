@@ -24,12 +24,32 @@ import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Fab from '@material-ui/core/Fab';
+import TextField from '@material-ui/core/TextField';
 
+import { Field, reduxForm } from 'redux-form/immutable'
 
 import injectReducer from 'utils/injectReducer';
 import makeSelectItemSettings from './selectors';
 import reducer from './reducer';
 import messages from './messages';
+
+
+const renderTextField = ({
+  label,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => (
+  <TextField
+    label={label}
+    placeholder={label}
+    error={touched && invalid}
+    helperText={touched && error}
+    {...input}
+    {...custom}
+  />
+)
+
 
 const SettingsContainer = styled.div`
   position: absolute;
@@ -45,7 +65,6 @@ export class ItemSettings extends React.Component {
   };
 
   handleToggle = () => {
-    console.log('hi');
     this.setState(state => ({ open: !state.open }));
   };
 
@@ -63,11 +82,25 @@ export class ItemSettings extends React.Component {
         </SettingsContainer>
         <SettingsContainer top="50px">
           <Paper style={{display: open ? 'block' : 'none'}}>
-            <MenuList>
+          <form onSubmit={console.log}>
+            <div>
+              <Field name="firstName" component={renderTextField} type="text" label="Vorname" />
+            </div>
+            <div>
+              <label htmlFor="lastName">Last Name</label>
+              <Field name="lastName" component="input" type="text" />
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <Field name="email" component="input" type="email" />
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+            {/* <MenuList>
               <MenuItem onClick={this.handleClose}>Profile</MenuItem>
               <MenuItem onClick={this.handleClose}>My account</MenuItem>
               <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-            </MenuList>
+            </MenuList> */}
           </Paper>
         </SettingsContainer>
       </div>
@@ -79,6 +112,8 @@ ItemSettings.propTypes = {
   dispatch: PropTypes.func.isRequired,
 
 };
+
+const createReduxForm = reduxForm({ form: 'settings' });
 
 const mapStateToProps = createStructuredSelector({
   itemSettings: makeSelectItemSettings(),
@@ -97,7 +132,7 @@ const withConnect = connect(
 
 const withReducer = injectReducer({ key: 'itemSettings', reducer });
 
-export default compose(
+export default createReduxForm(compose(
   withReducer,
   withConnect,
-)(ItemSettings);
+)(ItemSettings));
