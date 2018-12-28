@@ -54,22 +54,22 @@ export class ItemSettings extends React.Component {
 
     return (
       <div>
-      <SettingsContainer>
-        <Fab color="primary" aria-label="Add">
-          <Button onClick={this.handleToggle}>
-            <SettingsIcon />
-          </Button>
-        </Fab>
-      </SettingsContainer>
-      <SettingsContainer top="50px">
-        <Paper style={{display: open ? 'block' : 'none'}}>
-          <MenuList>
-            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-            <MenuItem onClick={this.handleClose}>My account</MenuItem>
-            <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-          </MenuList>
-        </Paper>
-      </SettingsContainer>
+        <SettingsContainer>
+          <Fab color="primary" aria-label="Add">
+            <Button onClick={this.handleToggle}>
+              <SettingsIcon />
+            </Button>
+          </Fab>
+        </SettingsContainer>
+        <SettingsContainer top="50px">
+          <Paper style={{display: open ? 'block' : 'none'}}>
+            <MenuList>
+              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+              <MenuItem onClick={this.handleClose}>My account</MenuItem>
+              <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+            </MenuList>
+          </Paper>
+        </SettingsContainer>
       </div>
     );
   }

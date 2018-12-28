@@ -26,10 +26,10 @@ class Control extends React.Component {
     console.log('hi');
     return (
       <div>
-        <Button onClick={() => this.props.dispatch(play(true))}>P</Button>
-        <Button onClick={() => this.props.dispatch(play(false))}>||</Button>
-        <Button onClick={() => this.props.dispatch(setTime(40))}>40</Button>
-        <Button onClick={() => this.props.dispatch(setTime(10))}>10</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(play(true))}>P</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(play(false))}>||</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(setTime(40))}>40</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(setTime(10))}>10</Button>
       </div>
     );
   }

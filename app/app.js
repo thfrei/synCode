@@ -48,7 +48,14 @@ openSansObserver.load().then(() => {
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
+    primary: {
+      main: '#1565c0',
+    },
+    secondary: {
+      main: '#03a9f4',
+    },
   },
+  
   typography: {
     useNextVariants: true,
   },
