@@ -24,32 +24,12 @@ import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Fab from '@material-ui/core/Fab';
-import TextField from '@material-ui/core/TextField';
-
-import { Field, reduxForm } from 'redux-form/immutable'
 
 import injectReducer from 'utils/injectReducer';
 import makeSelectItemSettings from './selectors';
 import reducer from './reducer';
 import messages from './messages';
-
-
-const renderTextField = ({
-  label,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}) => (
-  <TextField
-    label={label}
-    placeholder={label}
-    error={touched && invalid}
-    helperText={touched && error}
-    {...input}
-    {...custom}
-  />
-)
-
+import SettingsForm from '../../components/SettingsForm';
 
 const SettingsContainer = styled.div`
   position: absolute;
@@ -68,8 +48,15 @@ export class ItemSettings extends React.Component {
     this.setState(state => ({ open: !state.open }));
   };
 
+  handleSubmit = (values) => {
+    console.log('itemsettings handlesubmit', values);
+  }
+
   render() {
     const { open } = this.state;
+    const {item } = this.props;
+
+    console.log('item', item);
 
     return (
       <div>
@@ -82,25 +69,10 @@ export class ItemSettings extends React.Component {
         </SettingsContainer>
         <SettingsContainer top="50px">
           <Paper style={{display: open ? 'block' : 'none'}}>
-          <form onSubmit={console.log}>
-            <div>
-              <Field name="firstName" component={renderTextField} type="text" label="Vorname" />
-            </div>
-            <div>
-              <label htmlFor="lastName">Last Name</label>
-              <Field name="lastName" component="input" type="text" />
-            </div>
-            <div>
-              <label htmlFor="email">Email</label>
-              <Field name="email" component="input" type="email" />
-            </div>
-            <button type="submit">Submit</button>
-          </form>
-            {/* <MenuList>
-              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-              <MenuItem onClick={this.handleClose}>My account</MenuItem>
-              <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-            </MenuList> */}
+            <SettingsForm 
+              onSubmit={this.handleSubmit} 
+              name={`settingsItem${item.get('id')}`}
+            />
           </Paper>
         </SettingsContainer>
       </div>
@@ -110,10 +82,10 @@ export class ItemSettings extends React.Component {
 
 ItemSettings.propTypes = {
   dispatch: PropTypes.func.isRequired,
-
+  item: PropTypes.any,
 };
 
-const createReduxForm = reduxForm({ form: 'settings' });
+// const createReduxForm = reduxForm({ form: 'settings' });
 
 const mapStateToProps = createStructuredSelector({
   itemSettings: makeSelectItemSettings(),
@@ -132,7 +104,7 @@ const withConnect = connect(
 
 const withReducer = injectReducer({ key: 'itemSettings', reducer });
 
-export default createReduxForm(compose(
+export default compose(
   withReducer,
   withConnect,
-)(ItemSettings));
+)(ItemSettings);

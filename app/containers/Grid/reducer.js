@@ -29,6 +29,7 @@ function gridItem(id, type, x, y, w, h) {
     offset: 0,
     source: '',
     static: true,
+    muted: true,
   };
 }
 

@@ -11,6 +11,7 @@ import React, { Component } from 'react';
 import { Player as VideoReactPlayer, ControlBar } from 'video-react';
 import ButtonCore from '@material-ui/core/Button';
 import 'video-react/dist/video-react.css'; // import css
+import {bind} from 'decko';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -86,12 +87,20 @@ class PlayerControlExample extends Component {
     return (
       <div style={{ height: '100%', flexGrow: 1, }}>
         <Typography variant="subtitle1">{item.get('type')}</Typography>
-        <ItemSettings style={{position: 'absolute'}} item={item} />
+        <ItemSettings style={{position: 'absolute'}} item={item} onSubmit={this.settingsChange} />
         <VideoReactPlayer ref={this.myRef} height="90%" fluid={false} muted>
           <source src={this.state.source} />
         </VideoReactPlayer>
       </div>
     );
+  }
+
+  settingsChange = (values) => {
+    const {item} = this.props;
+    const url = values.get('url');
+
+    console.log('item', item, url);
+    
   }
 
   play() {
