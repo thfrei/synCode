@@ -56,33 +56,50 @@ class Grid extends React.Component {
       lg: this.props.layout.toJS(),
     };
 
+    const w = window;
+    const d = document;
+    const e = d.documentElement;
+    const g = d.getElementsByTagName('body')[0];
+    const x = w.innerWidth || e.clientWidth || g.clientWidth;
+    const y = w.innerHeight || e.clientHeight || g.clientHeight;
+    const rowHeight = parseInt(y / 11, 10) || 70;
+
     return (
       <Paper>
-      <ResponsiveGridLayout
-        className="layout"
-        layouts={layouts}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        verticalCompact="false"
-        rowHeight={70}
-      >
-        {this.props.items.valueSeq().map(item => (
-          <GridItem key={toString(item.get('id'))}>
-            {this.renderContent(item)}
-          </GridItem>
-        ))}
-      </ResponsiveGridLayout>
+        <ResponsiveGridLayout
+          className="layout"
+          layouts={layouts}
+          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          verticalCompact="false"
+          rowHeight={rowHeight}
+        >
+          {this.props.items.valueSeq().map(item => (
+            <GridItem key={toString(item.get('id'))}>
+              {this.renderContent(item)}
+            </GridItem>
+          ))}
+        </ResponsiveGridLayout>
       </Paper>
     );
   }
 
   renderContent(item) {
-    const {globalPlay, setTime, ...rest} = this.props;
+    const { globalPlay, setTime, ...rest } = this.props;
 
     switch (item.get('type')) {
       case VIDEO:
       case AUDIO:
-        return <Player test="5" play={globalPlay} setTime={setTime} item={item} offset={item.get('offset')} {...rest} />;
+        return (
+          <Player
+            test="5"
+            play={globalPlay}
+            setTime={setTime}
+            item={item}
+            offset={item.get('offset')}
+            {...rest}
+          />
+        );
       case EDITOR:
         return (
           <div>
@@ -111,12 +128,13 @@ Grid.propTypes = {
   // dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, props) => createStructuredSelector({
-  items: selectGridItems,
-  layout: selectLayout,
-  globalPlay: selectGlobalPlaying,
-  setTime: selectGlobalSetTime,
-});
+const mapStateToProps = (state, props) =>
+  createStructuredSelector({
+    items: selectGridItems,
+    layout: selectLayout,
+    globalPlay: selectGlobalPlaying,
+    setTime: selectGlobalSetTime,
+  });
 
 function mapDispatchToProps(dispatch) {
   return {
