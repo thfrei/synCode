@@ -30,6 +30,7 @@ import makeSelectItemSettings from './selectors';
 import reducer from './reducer';
 import messages from './messages';
 import SettingsForm from '../../components/SettingsForm';
+import { updateItem } from '../Grid/actions';
 
 const SettingsContainer = styled.div`
   position: absolute;
@@ -48,15 +49,24 @@ export class ItemSettings extends React.Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  handleSubmit = (values) => {
+  /**
+   * 
+   * @var values {Immutable.Map}
+   */
+  handleSubmit = values => {
+    const { item } = this.props;
+
     console.log('itemsettings handlesubmit', values);
-  }
+    if (values) {
+      const url = values.get('url');
+
+      this.props.dispatch(updateItem(item.get('id'), 'source', url));
+    }
+  };
 
   render() {
     const { open } = this.state;
-    const {item } = this.props;
-
-    console.log('item', item);
+    const { item } = this.props;
 
     return (
       <div>
@@ -68,9 +78,9 @@ export class ItemSettings extends React.Component {
           </Fab>
         </SettingsContainer>
         <SettingsContainer top="50px">
-          <Paper style={{display: open ? 'block' : 'none'}}>
-            <SettingsForm 
-              onSubmit={this.handleSubmit} 
+          <Paper style={{ display: open ? 'block' : 'none' }}>
+            <SettingsForm
+              onSubmit={this.handleSubmit}
               name={`settingsItem${item.get('id')}`}
             />
           </Paper>

@@ -20,6 +20,8 @@ import 'react-resizable/css/styles.css';
 
 import Paper from '@material-ui/core/Paper';
 
+import {HotKeys} from 'react-hotkeys'
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { selectGridItems, selectLayout } from './selectors';
@@ -32,6 +34,7 @@ import { VIDEO, EDITOR, CONTROL, AUDIO } from './constants';
 import Control from '../Control/Loadable';
 import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
 import { updateOffset } from './actions';
+import { togglePlay } from '../App/actions';
 
 const GridItem = styled(Paper)`
   overflow: hidden;
@@ -62,25 +65,35 @@ class Grid extends React.Component {
     const g = d.getElementsByTagName('body')[0];
     const x = w.innerWidth || e.clientWidth || g.clientWidth;
     const y = w.innerHeight || e.clientHeight || g.clientHeight;
-    const rowHeight = parseInt(y / 11, 10) || 70;
+    const rowHeight = parseInt(y / 13, 10) || 70;
+
+    const map = {
+      'play': 'space space',
+    };
+
+    const handlers = {
+      'play': () => this.props.dispatch(togglePlay()),
+    }
 
     return (
-      <Paper>
-        <ResponsiveGridLayout
-          className="layout"
-          layouts={layouts}
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-          verticalCompact="false"
-          rowHeight={rowHeight}
-        >
-          {this.props.items.valueSeq().map(item => (
-            <GridItem key={toString(item.get('id'))}>
-              {this.renderContent(item)}
-            </GridItem>
-          ))}
-        </ResponsiveGridLayout>
-      </Paper>
+      <HotKeys keyMap={map} handlers={handlers}>
+        <Paper>
+          <ResponsiveGridLayout
+            className="layout"
+            layouts={layouts}
+            breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+            cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+            verticalCompact="false"
+            rowHeight={rowHeight}
+          >
+            {this.props.items.valueSeq().map(item => (
+              <GridItem key={toString(item.get('id'))}>
+                {this.renderContent(item)}
+              </GridItem>
+            ))}
+          </ResponsiveGridLayout>
+        </Paper>
+      </HotKeys>
     );
   }
 

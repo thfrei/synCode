@@ -10,4 +10,5 @@
  */
 
 export const PLAY = 'synCode/App/PLAY';
+export const TOGGLE_PLAY = 'synCode/App/TOGGLE_PLAY';
 export const SET_TIME = 'synCode/App/SET_TIME';

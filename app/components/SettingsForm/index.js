@@ -24,7 +24,7 @@ const renderTextField = ({
   ...custom
 }) => (
   <TextField
-    variant={"outlined"}
+    variant="outlined"
     label={label}
     placeholder={label}
     error={touched && invalid}
@@ -40,9 +40,21 @@ class SettingsForm extends React.Component {
     return (
       <div>
         <Form onSubmit={this.props.handleSubmit}>
-          <Field name="url" component={renderTextField} type="text" label="URL" />
-          <Field name="offset" component={renderTextField} type="text" label="Offset" />
-          <Button variant={"contained"} type="submit">Apply</Button>
+          <Field
+            name="url"
+            component={renderTextField}
+            type="text"
+            label="URL"
+          />
+          <Field
+            name="offset"
+            component={renderTextField}
+            type="text"
+            label="Offset"
+          />
+          <Button variant="contained" type="submit">
+            Apply
+          </Button>
         </Form>
       </div>
     );
@@ -61,15 +73,13 @@ SettingsForm.propTypes = {};
 export default class ReduxSettingsForm extends React.Component {
   componentWillMount() {
     this.RForm = reduxForm({
-      form: this.props.name
+      form: this.props.name,
     })(SettingsForm);
   }
 
   render() {
     const RForm = this.RForm;
-    return (
-      <RForm {...this.props} />
-    )
+    return <RForm {...this.props} />;
   }
 }
 

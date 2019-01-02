@@ -27,7 +27,7 @@ function gridItem(id, type, x, y, w, h) {
     playing: false,
     fullscreen: false,
     offset: 0,
-    source: '',
+    source: 'http://media.w3.org/2010/05/video/movie_300.webm',
     static: true,
     muted: true,
   };

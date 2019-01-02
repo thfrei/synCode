@@ -61,6 +61,9 @@ class PlayerControlExample extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const item = this.props.item || {};
+    const prevItem = prevProps.item || {};
+
     if (prevProps.play && !this.props.play) {
       this.pause();
     }
@@ -69,27 +72,40 @@ class PlayerControlExample extends Component {
       this.play();
     }
 
+    // Set to Time
     if (this.props.setTime !== prevProps.setTime && this.props.setTime) {
       console.log('seek', this.props.setTime);
-      this.seek(this.props.setTime)();
+      this.seek(this.props.setTime + item.get('offset'))();
     }
 
+    // Offset
     if (this.props.offset !== prevProps.offset && this.props.offset) {
       const { player } = this.myRef.current.getState();
       const currentTime = player.currentTime;
       this.seek(currentTime + this.props.offset - prevProps.offset || 0)();
     }
+
+    // Source
+    if (item.get('source') !== prevItem.get('source')) {
+      this.changeSource(item.get('source'))();
+      this.seek(this.props.setTime + item.get('offset'))();
+    }
+
+    // Mute
+    if (item.get('muted') !== prevItem.get('muted')) {
+      this.setMuted(item.get('muted'))();
+    }
   }
 
   render() {
     const { item } = this.props;
-    // console.log(this.props, this.myRef.current)
+    // console.log('render player', item, this.props, this.myRef.current)
     return (
       <div style={{ height: '100%', flexGrow: 1, }}>
         <Typography variant="subtitle1">{item.get('type')}</Typography>
         <ItemSettings style={{position: 'absolute'}} item={item} onSubmit={this.settingsChange} />
         <VideoReactPlayer ref={this.myRef} height="90%" fluid={false} muted>
-          <source src={this.state.source} />
+          <source src={item.get('source')} />
         </VideoReactPlayer>
       </div>
     );
@@ -151,10 +167,10 @@ class PlayerControlExample extends Component {
     };
   }
 
-  changeSource(name) {
+  changeSource(source) {
     return () => {
       this.setState({
-        source: sources[name],
+        source,
       });
       this.myRef.current.load();
     };
