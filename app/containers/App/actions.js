@@ -1,4 +1,4 @@
-import { PLAY, SET_TIME, TOGGLE_PLAY, SET, SYNC_SET_AND_MASTER_TIME } from "./constants";
+import { PLAY, SET_TIME, TOGGLE_PLAY, SET, SYNC_SET_AND_MASTER_TIME, MASTER_TIME_MINUS } from "./constants";
 
 export function play(playing) {
   return {
@@ -14,6 +14,12 @@ export function togglePlay() {
 export function setTime(time) {
   return {
     type: SET_TIME,
+    time,
+  };
+}
+export function masterTimeMinus(time) {
+  return {
+    type: MASTER_TIME_MINUS,
     time,
   };
 }

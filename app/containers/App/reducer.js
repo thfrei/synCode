@@ -11,7 +11,7 @@
  */
 
 import { fromJS } from 'immutable';
-import { PLAY, SET_TIME, TOGGLE_PLAY, SET, SYNC_SET_AND_MASTER_TIME } from './constants';
+import { PLAY, SET_TIME, TOGGLE_PLAY, SET, SYNC_SET_AND_MASTER_TIME, MASTER_TIME_MINUS } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
@@ -36,6 +36,9 @@ function appReducer(state = initialState, action) {
     }
     case SYNC_SET_AND_MASTER_TIME: {
       return state.set('setTime', state.get('masterTime'));
+    }
+    case MASTER_TIME_MINUS: {
+      return state.set('setTime', state.get('masterTime') - action.time);
     }
     default:
       return state;

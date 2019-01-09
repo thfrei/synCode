@@ -19,7 +19,7 @@ const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 const videoPath = path.join(__dirname, '../videos');
-app.use('/videos', expressVideo.stream(videoPath));
+app.get('/videos', expressVideo.stream(videoPath));
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

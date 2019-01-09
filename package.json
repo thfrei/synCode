@@ -94,6 +94,8 @@
     "redux-saga": "0.16.2",
     "reselect": "4.0.0",
     "sanitize.css": "4.1.0",
+    "slate": "^0.44.9",
+    "slate-react": "^0.21.15",
     "styled-components": "4.0.2",
     "video-react": "^0.13.1",
     "warning": "4.0.2"
