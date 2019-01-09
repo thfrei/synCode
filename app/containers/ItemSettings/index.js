@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import styled from 'styled-components';
+import * as _ from 'lodash';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
