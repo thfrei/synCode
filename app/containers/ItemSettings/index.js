@@ -59,8 +59,10 @@ export class ItemSettings extends React.Component {
     console.log('itemsettings handlesubmit', values);
     if (values) {
       const url = values.get('url');
+      const offset = values.get('offset') || 0;
 
       this.props.dispatch(updateItem(item.get('id'), 'source', url));
+      this.props.dispatch(updateItem(item.get('id'), 'offset', _.toNumber(offset)));
     }
   };
 
@@ -82,6 +84,8 @@ export class ItemSettings extends React.Component {
             <SettingsForm
               onSubmit={this.handleSubmit}
               name={`settingsItem${item.get('id')}`}
+              url={item.get('source')}
+              offset={item.get('offset')}
             />
           </Paper>
         </SettingsContainer>

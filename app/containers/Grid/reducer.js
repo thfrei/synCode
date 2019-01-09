@@ -30,6 +30,7 @@ function gridItem(id, type, x, y, w, h) {
     source: 'http://media.w3.org/2010/05/video/movie_300.webm',
     static: true,
     muted: true,
+    master: id === 1,
   };
 }
 
@@ -46,7 +47,7 @@ function gridReducer(state = initialState, action) {
         )
       );
     case UPDATE_ITEM: {
-      const {id, property, value} = action;
+      const { id, property, value } = action;
       return state.update('items',
         items => items.update(
           items.findIndex(item => item.get('id') === id),

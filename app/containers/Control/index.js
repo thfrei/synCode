@@ -18,18 +18,21 @@ import makeSelectControl from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { play, setTime } from '../App/actions';
+import { play, setTime, syncSetAndMasterTime } from '../App/actions';
+import { selectGlobalMasterTime } from '../App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 class Control extends React.Component {
   render() {
-    console.log('hi');
     return (
       <div>
+        {this.props.masterTime}
+        <br />
         <Button variant="contained" onClick={() => this.props.dispatch(play(true))}>P</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(play(false))}>||</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(setTime(40))}>40</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(setTime(10))}>10</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(syncSetAndMasterTime())}>Sync</Button>
       </div>
     );
   }
@@ -41,6 +44,7 @@ Control.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   control: makeSelectControl(),
+  masterTime: selectGlobalMasterTime,
 });
 
 function mapDispatchToProps(dispatch) {

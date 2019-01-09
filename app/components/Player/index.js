@@ -6,18 +6,21 @@
 
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import React, { Component } from 'react';
 import { Player as VideoReactPlayer, ControlBar } from 'video-react';
 import ButtonCore from '@material-ui/core/Button';
 import 'video-react/dist/video-react.css'; // import css
-import {bind} from 'decko';
+import { bind } from 'decko';
+import * as _ from 'lodash';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 import ItemSettings from '../../containers/ItemSettings';
+import * as appActions from '../../containers/App/actions';
 
 const Button = props => (
   <ButtonCore variant="contained" onClick={props.onClick}>
@@ -46,18 +49,27 @@ class PlayerControlExample extends Component {
     this.changePlaybackRateRate = this.changePlaybackRateRate.bind(this);
     this.changeVolume = this.changeVolume.bind(this);
     this.setMuted = this.setMuted.bind(this);
+    this.handleStateChange = _.debounce(this.handleStateChange, 500, {maxWait: 1000});
   }
 
+  // this.props.dispatch(set('masterTime', state.currentTime));
   componentDidMount() {
     // subscribe state change
-    // this.myRef.current.subscribeToStateChange(this.handleStateChange.bind(this));
+    this.myRef.current.subscribeToStateChange(this.handleStateChange.bind(this));
   }
 
   handleStateChange(state, prevState) {
-    // copy player state to this component's state
-    // this.setState({
-    //   player: state,
-    // });
+    const item = this.props.item || {};
+    // console.log('hSC', item);
+    try {
+      if (item.get('master')) {
+        const currentTime = _.toNumber(_.get(state, 'currentTime', 0));
+        // console.log('hSC in if', item, state, currentTime);
+        this.props.dispatch(appActions.set('masterTime', state.currentTime));
+      }
+    } catch (err) {
+      console.log('hSC-err', err);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -79,10 +91,11 @@ class PlayerControlExample extends Component {
     }
 
     // Offset
-    if (this.props.offset !== prevProps.offset && this.props.offset) {
+    if (item.get('offset') !== prevItem.get('offset')) {
       const { player } = this.myRef.current.getState();
-      const currentTime = player.currentTime;
-      this.seek(currentTime + this.props.offset - prevProps.offset || 0)();
+      const seekTime = this.props.setTime + item.get('offset') || 0;
+      console.log('offset', item.get('offset'), 'seekTime:', seekTime, player);
+      this.seek(seekTime)();
     }
 
     // Source
@@ -102,21 +115,13 @@ class PlayerControlExample extends Component {
     // console.log('render player', item, this.props, this.myRef.current)
     return (
       <div style={{ height: '100%', flexGrow: 1, }}>
-        <Typography variant="subtitle1">{item.get('type')}</Typography>
-        <ItemSettings style={{position: 'absolute'}} item={item} onSubmit={this.settingsChange} />
+        <Typography variant="subtitle1">{item.get('master') ? 'MASTER | ' : ''}{item.get('type')} | Offset: {item.get('offset')}</Typography>
+        <ItemSettings style={{ position: 'absolute' }} item={item} />
         <VideoReactPlayer ref={this.myRef} height="90%" fluid={false} muted>
           <source src={item.get('source')} />
         </VideoReactPlayer>
       </div>
     );
-  }
-
-  settingsChange = (values) => {
-    const {item} = this.props;
-    const url = values.get('url');
-
-    console.log('item', item, url);
-    
   }
 
   play() {
@@ -177,9 +182,20 @@ class PlayerControlExample extends Component {
   }
 }
 
-PlayerControlExample.propTypes = {};
+PlayerControlExample.propTypes = {
+  dispatch: PropTypes.func,
+  items: PropTypes.any,
+};
 
-export { PlayerControlExample as Player };
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const PlayerControlExampleC = connect(null, mapDispatchToProps)(PlayerControlExample);
+
+export { PlayerControlExampleC as Player };
 
 
 const sources = {

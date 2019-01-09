@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import Immutable from 'immutable';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { Field, reduxForm, Form } from 'redux-form/immutable';
@@ -23,16 +24,16 @@ const renderTextField = ({
   meta: { touched, invalid, error },
   ...custom
 }) => (
-  <TextField
-    variant="outlined"
-    label={label}
-    placeholder={label}
-    error={touched && invalid}
-    helperText={touched && error}
-    {...input}
-    {...custom}
-  />
-);
+    <TextField
+      variant="outlined"
+      label={label}
+      placeholder={label}
+      error={touched && invalid}
+      helperText={touched && error}
+      {...input}
+      {...custom}
+    />
+  );
 
 /* eslint-disable react/prefer-stateless-function */
 class SettingsForm extends React.Component {
@@ -70,10 +71,14 @@ SettingsForm.propTypes = {};
 //   form: props.form,
 // })
 
-export default class ReduxSettingsForm extends React.Component {
+export default class ReduxSettingsForm extends React.Component { // eslint-disable-line
   componentWillMount() {
     this.RForm = reduxForm({
       form: this.props.name,
+      initialValues: Immutable.Map({
+        url: this.props.url,
+        offset: this.props.offset,
+      })
     })(SettingsForm);
   }
 

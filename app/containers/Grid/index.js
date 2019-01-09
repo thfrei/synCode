@@ -109,7 +109,6 @@ class Grid extends React.Component {
             play={globalPlay}
             setTime={setTime}
             item={item}
-            offset={item.get('offset')}
             {...rest}
           />
         );
