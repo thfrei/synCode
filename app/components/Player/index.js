@@ -37,6 +37,7 @@ class PlayerControlExample extends Component {
       player: {},
       offset: 0,
       settingsOpen: false,
+
     };
 
     this.myRef = React.createRef();
@@ -49,7 +50,7 @@ class PlayerControlExample extends Component {
     this.changePlaybackRateRate = this.changePlaybackRateRate.bind(this);
     this.changeVolume = this.changeVolume.bind(this);
     this.setMuted = this.setMuted.bind(this);
-    this.handleStateChange = _.debounce(this.handleStateChange, 500, {maxWait: 1000});
+    this.handleStateChange = _.debounce(this.handleStateChange, 300, { maxWait: 1000 });
   }
 
   // this.props.dispatch(set('masterTime', state.currentTime));
@@ -62,6 +63,8 @@ class PlayerControlExample extends Component {
     const item = this.props.item || {};
     // console.log('hSC', item);
     try {
+      this.setState({ player: state });
+
       if (item.get('master')) {
         const currentTime = _.toNumber(_.get(state, 'currentTime', 0));
         // console.log('hSC in if', item, state, currentTime);
@@ -115,7 +118,12 @@ class PlayerControlExample extends Component {
     // console.log('render player', item, this.props, this.myRef.current)
     return (
       <div style={{ height: '100%', flexGrow: 1, }}>
-        <Typography variant="subtitle1">{item.get('master') ? 'MASTER | ' : ''}{item.get('type')} | Offset: {item.get('offset')}</Typography>
+        <Typography variant="subtitle1">
+        {item.get('master') ? 'MASTER | ' : ''}{item.get('type')}
+        | Offset: {item.get('offset')}
+        | TIME: {_.get(this.state.player, 'currentTime')}
+        | Time-Offset: {_.get(this.state.player, 'currentTime')-item.get('offset')}
+        </Typography>
         <ItemSettings style={{ position: 'absolute' }} item={item} />
         <VideoReactPlayer ref={this.myRef} height="90%" fluid={false} muted>
           <source src={item.get('source')} />

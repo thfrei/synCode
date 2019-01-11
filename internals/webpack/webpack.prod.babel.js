@@ -20,6 +20,7 @@ module.exports = require('./webpack.base.babel')({
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
+    publicPath: './', // use '/' for dev and './' for prod -- make it possible to use this build in folders and not only in root domain
   },
 
   optimization: {

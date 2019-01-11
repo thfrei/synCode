@@ -18,7 +18,7 @@ module.exports = options => ({
     {
       // Compile into js/build.js
       path: path.resolve(process.cwd(), 'build'),
-      publicPath: './', // make it possible to use this build in folders and not only in root domain
+      publicPath: '/', // use '/' for dev and './' for prod -- make it possible to use this build in folders and not only in root domain
     },
     options.output,
   ), // Merge with env dependent settings
