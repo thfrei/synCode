@@ -18,11 +18,33 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import Grid from '../Grid';
 
+// Material UI Theme
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import GlobalStyle from '../../global-styles';
 
 export default function App() {
+
+  // Material UI
+  const theme = createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        main: '#1565c0',
+      },
+      secondary: {
+        main: '#03a9f4',
+      },
+    },
+    typography: {
+      useNextVariants: true,
+    },
+  });
+
   return (
-    <div>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
       <Helmet
         titleTemplate="%s - synCode"
         defaultTitle="Home"
@@ -36,6 +58,6 @@ export default function App() {
       </Switch>
       {/* <Footer /> */}
       <GlobalStyle />
-    </div>
+    </MuiThemeProvider>
   );
 }

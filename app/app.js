@@ -17,8 +17,8 @@ import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
-// Material UI Theme
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+// Semantic UI
+import 'semantic-ui-css/semantic.min.css'
 
 // Import root app
 import App from 'containers/App';
@@ -29,23 +29,6 @@ import LanguageProvider from 'containers/LanguageProvider';
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
-// generated ones via https://www.favicon-generator.org/
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-57x57.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-60x60.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-72x72.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-76x76.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-114x114.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-120x120.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-144x144.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-152x152.png';
-// import '!file-loader?name=[name].[ext]!./images/apple-icon-180x180.png';
-// import '!file-loader?name=[name].[ext]!./images/android-icon-192x192.png';
-// import '!file-loader?name=[name].[ext]!./images/favicon-32x32.png';
-// import '!file-loader?name=[name].[ext]!./images/favicon-96x96.png';
-// import '!file-loader?name=[name].[ext]!./images/favicon-16x16.png';
-// import '!file-loader?name=[name].[ext]!./images/manifest.json';
-// end generated icons
-
 
 import configureStore from './configureStore';
 
@@ -61,23 +44,6 @@ openSansObserver.load().then(() => {
   document.body.classList.add('fontLoaded');
 });
 
-// Material UI
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    primary: {
-      main: '#1565c0',
-    },
-    secondary: {
-      main: '#03a9f4',
-    },
-  },
-  
-  typography: {
-    useNextVariants: true,
-  },
-});
-
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
@@ -87,11 +53,9 @@ const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <MuiThemeProvider theme={theme}>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </MuiThemeProvider>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,

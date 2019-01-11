@@ -94,6 +94,8 @@
     "redux-saga": "0.16.2",
     "reselect": "4.0.0",
     "sanitize.css": "4.1.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.84.0",
     "slate": "^0.44.9",
     "slate-react": "^0.21.15",
     "styled-components": "4.0.2",

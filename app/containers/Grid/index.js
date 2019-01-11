@@ -20,7 +20,7 @@ import 'react-resizable/css/styles.css';
 
 import Paper from '@material-ui/core/Paper';
 
-import {HotKeys} from 'react-hotkeys'
+import { HotKeys } from 'react-hotkeys'
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -31,7 +31,9 @@ import saga from './saga';
 
 import { Player } from '../../components/Player';
 import { VIDEO, EDITOR, CONTROL, AUDIO } from './constants';
-import Control from '../Control/Loadable';
+import Control from '../Control';
+import SidebarSettings from '../SidebarSettings';
+import Topbar from '../Topbar';
 import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
 import { updateOffset } from './actions';
 import { togglePlay } from '../App/actions';
@@ -77,6 +79,8 @@ class Grid extends React.Component {
 
     return (
       <HotKeys keyMap={map} handlers={handlers}>
+        <Topbar />
+        <SidebarSettings />
         <Paper>
           <ResponsiveGridLayout
             className="layout"
@@ -93,6 +97,7 @@ class Grid extends React.Component {
             ))}
           </ResponsiveGridLayout>
         </Paper>
+
       </HotKeys>
     );
   }
