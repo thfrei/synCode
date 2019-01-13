@@ -48,21 +48,13 @@ class Control extends React.Component {
             <Modal.Header><Typography variant='h4'>Help</Typography></Modal.Header>
             <Modal.Content image>
               <Modal.Description>
-                  <Typography variant={"h6"}>
-                  <textarea 
-          style={{
-            width: '100%',
-            height: '100%',
-            minHeight: '300px',
-            border: '1px solid black',
-          }}>
-      'play': 'alt+p',
-      'minus2': 'alt+h',
-      'plus2': 'alt+l',
-      'insertTime': 'alt+j',
-      'sync': 'alt+s',
-      </textarea>
-                  </Typography>
+                <Typography variant={"body1"}>
+                  'play': 'alt+p', <br />
+                  'minus2': 'alt+h',<br />
+                  'plus2': 'alt+l',<br />
+                  'insertTime': 'alt+j',<br />
+                  'sync': 'alt+s',<br />
+                </Typography>
               </Modal.Description>
             </Modal.Content>
           </Paper>
