@@ -50,7 +50,8 @@ class PlayerControlExample extends Component {
     this.changePlaybackRateRate = this.changePlaybackRateRate.bind(this);
     this.changeVolume = this.changeVolume.bind(this);
     this.setMuted = this.setMuted.bind(this);
-    this.handleStateChange = _.debounce(this.handleStateChange, 300, { maxWait: 1000 });
+    // this.handleStateChange = _.debounce(this.handleStateChange, 300, { maxWait: 600 });
+    this.handleStateChange = this.handleStateChange.bind(this);
   }
 
   // this.props.dispatch(set('masterTime', state.currentTime));
@@ -66,9 +67,22 @@ class PlayerControlExample extends Component {
       this.setState({ player: state });
 
       if (item.get('master')) {
-        const currentTime = _.toNumber(_.get(state, 'currentTime', 0));
-        // console.log('hSC in if', item, state, currentTime);
-        this.props.dispatch(appActions.set('masterTime', state.currentTime));
+        this.props.updateMasterTime(state.currentTime);
+      }
+
+      if (state.seekingTime  !== 0) {
+        const currentTime = state.seekingTime - item.get('offset');
+        this.props.seekMasterTime(currentTime);
+      }
+
+      // paused
+      if(state.paused === true && prevState.paused === false) {
+        this.props.updGlobalPlay(false); // false = set to pause
+      }
+
+      // now playing
+      if (state.paused === false && prevState.paused === true) {
+        this.props.updGlobalPlay(true); // true = play
       }
     } catch (err) {
       console.log('hSC-err', err);
@@ -193,11 +207,23 @@ class PlayerControlExample extends Component {
 PlayerControlExample.propTypes = {
   dispatch: PropTypes.func,
   items: PropTypes.any,
+  updateMasterTime: PropTypes.func,
+  seekMasterTime: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    seekMasterTime: (time) => {
+      dispatch(appActions.set('masterTime', time));
+      dispatch(appActions.syncSetAndMasterTime());
+    },
+    updateMasterTime: _.debounce((time) => {
+      dispatch(appActions.set('masterTime', time));
+    }, 200, {maxWait: 500}),
+    updGlobalPlay: (playing) => {
+      dispatch(appActions.play(playing));
+    }
   };
 }
 
