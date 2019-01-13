@@ -16,7 +16,9 @@ import makeSelectTopbar from './selectors';
 import reducer from './reducer';
 import messages from './messages';
 
-import { Typography, Paper } from '@material-ui/core';
+import { Typography, Paper, Button } from '@material-ui/core';
+import { Modal, Icon, Container, Grid } from 'semantic-ui-react';
+import Help from '../../components/Help';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Topbar extends React.Component {
@@ -24,9 +26,23 @@ export class Topbar extends React.Component {
     return (
       <div>
         <Paper>
-          <Typography variant="h5">
-            Topbar
-          </Typography>
+          <Grid>
+            <Grid.Column>
+              <Typography variant="h5">
+                Topbar
+              </Typography>
+            </Grid.Column>
+            {/* <Grid.Column>
+              <Modal trigger={<Button><Icon name="question circle outline" /></Button>}>
+                <Modal.Header>Select a Photo</Modal.Header>
+                <Modal.Content image>
+                  <Modal.Description>
+                    <Help />
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+            </Grid.Column> */}
+          </Grid>
         </Paper>
       </div>
     );

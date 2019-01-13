@@ -32,6 +32,7 @@ import reducer from './reducer';
 import messages from './messages';
 import SettingsForm from '../../components/SettingsForm';
 import { updateItem } from '../Grid/actions';
+import { bind } from 'decko';
 
 const SettingsContainer = styled.div`
   position: absolute;
@@ -75,7 +76,7 @@ export class ItemSettings extends React.Component {
       <div>
         <SettingsContainer>
           <Fab color="primary" aria-label="Add">
-            <Button onClick={this.handleToggle}>
+            <Button onClick={this.handleToggle} onDoubleClick={this.toggleStatic}>
               <SettingsIcon />
             </Button>
           </Fab>
@@ -92,6 +93,13 @@ export class ItemSettings extends React.Component {
         </SettingsContainer>
       </div>
     );
+  }
+  
+  toggleStatic = (event) => {
+    const {item} = this.props;
+    console.log('tS', item);
+    // disable due to static true performanc eisue
+    // this.props.dispatch(updateItem(item.get('id'), 'static', !item.get('static')));
   }
 }
 

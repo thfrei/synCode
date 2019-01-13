@@ -1,4 +1,4 @@
-import { PLAY, SET_TIME, TOGGLE_PLAY, SET, SYNC_SET_AND_MASTER_TIME, MASTER_TIME_MINUS } from "./constants";
+import { PLAY, SET_TIME, TOGGLE_PLAY, SET, SYNC_SET_AND_MASTER_TIME, MASTER_TIME_MINUS, UPDATE_TEXT } from "./constants";
 
 export function play(playing) {
   return {
@@ -33,5 +33,11 @@ export function set(property, value) {
 export function syncSetAndMasterTime() {
   return {
     type: SYNC_SET_AND_MASTER_TIME,
+  };
+}
+export function updateText(text) {
+  return {
+    type: UPDATE_TEXT,
+    text,
   };
 }

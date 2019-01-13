@@ -34,9 +34,12 @@ import { VIDEO, EDITOR, CONTROL, AUDIO } from './constants';
 import Control from '../Control';
 import SidebarSettings from '../SidebarSettings';
 import Topbar from '../Topbar';
-import { selectGlobalPlaying, selectGlobalSetTime } from '../App/selectors';
+import Editor from '../Editor';
+import { selectGlobalPlaying, selectGlobalSetTime, selectGlobalMasterTime } from '../App/selectors';
 import { updateOffset } from './actions';
-import { togglePlay } from '../App/actions';
+import { togglePlay, syncSetAndMasterTime, masterTimeMinus, updateText } from '../App/actions';
+import { insertAtCaret, formatVideoTime } from '../../utils/misc';
+import { GLOBAL_EDITOR_ID } from '../Editor/constants';
 
 const GridItem = styled(Paper)`
   overflow: hidden;
@@ -70,16 +73,24 @@ class Grid extends React.Component {
     const rowHeight = parseInt(y / 13, 10) || 70;
 
     const map = {
-      'play': 'space space',
+      'play': 'alt+p',
+      'minus2': 'alt+h',
+      'plus2': 'alt+l',
+      'insertTime': 'alt+j',
+      'sync': 'alt+s',
     };
 
     const handlers = {
       'play': () => this.props.dispatch(togglePlay()),
+      'minus2': () => this.props.dispatch(masterTimeMinus(2)),
+      'plus2': () => this.props.dispatch(masterTimeMinus(-2)),
+      'insertTime': () => insertAtCaret(GLOBAL_EDITOR_ID, formatVideoTime(this.props.masterTime, false)),
+      'sync': () => this.props.dispatch(syncSetAndMasterTime()),
     }
 
     return (
       <HotKeys keyMap={map} handlers={handlers}>
-        <Topbar />
+        {/* <Topbar /> */}
         <SidebarSettings />
         <Paper>
           <ResponsiveGridLayout
@@ -119,17 +130,7 @@ class Grid extends React.Component {
         );
       case EDITOR:
         return (
-          <div>
-            <textarea
-              style={{
-                width: '100%',
-                height: '100%',
-                minHeight: '300px',
-                backgroundColor: '#EFEFEF',
-                border: '1px solid black',
-              }}
-            />
-          </div>
+          <Editor />
         );
       case CONTROL:
         return <Control />;
@@ -151,6 +152,7 @@ const mapStateToProps = (state, props) =>
     layout: selectLayout,
     globalPlay: selectGlobalPlaying,
     setTime: selectGlobalSetTime,
+    masterTime: selectGlobalMasterTime,
   });
 
 function mapDispatchToProps(dispatch) {

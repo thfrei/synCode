@@ -9,6 +9,7 @@ const selectGlobal = state => state.get('global');
 export const selectGlobalPlaying = state => state.getIn(['global', 'playing']);
 export const selectGlobalSetTime = state => state.getIn(['global', 'setTime']);
 export const selectGlobalMasterTime = state => state.getIn(['global', 'masterTime']);
+export const selectGlobalText = state => state.getIn(['global', 'text']);
 
 const selectRouter = state => state.get('router');
 

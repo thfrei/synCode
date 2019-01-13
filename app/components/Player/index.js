@@ -21,6 +21,7 @@ import Grid from '@material-ui/core/Grid';
 
 import ItemSettings from '../../containers/ItemSettings';
 import * as appActions from '../../containers/App/actions';
+import { formatVideoTime } from '../../utils/misc';
 
 const Button = props => (
   <ButtonCore variant="contained" onClick={props.onClick}>
@@ -70,13 +71,13 @@ class PlayerControlExample extends Component {
         this.props.updateMasterTime(state.currentTime);
       }
 
-      if (state.seekingTime  !== 0) {
+      if (state.seekingTime !== 0) {
         const currentTime = state.seekingTime - item.get('offset');
         this.props.seekMasterTime(currentTime);
       }
 
       // paused
-      if(state.paused === true && prevState.paused === false) {
+      if (state.paused === true && prevState.paused === false) {
         this.props.updGlobalPlay(false); // false = set to pause
       }
 
@@ -133,10 +134,9 @@ class PlayerControlExample extends Component {
     return (
       <div style={{ height: '100%', flexGrow: 1, }}>
         <Typography variant="subtitle1">
-        {item.get('master') ? 'MASTER | ' : ''}{item.get('type')}
-        | Offset: {item.get('offset')}
-        | TIME: {_.get(this.state.player, 'currentTime')}
-        | Time-Offset: {_.get(this.state.player, 'currentTime')-item.get('offset')}
+          {item.get('master') ? 'MASTER | ' : ''}{item.get('type')}
+          | Offset: {item.get('offset')}
+          | Time-Offset: {formatVideoTime(_.get(this.state.player, 'currentTime') - item.get('offset'))}
         </Typography>
         <ItemSettings style={{ position: 'absolute' }} item={item} />
         <VideoReactPlayer ref={this.myRef} height="90%" fluid={false} muted>
@@ -207,6 +207,7 @@ class PlayerControlExample extends Component {
 PlayerControlExample.propTypes = {
   dispatch: PropTypes.func,
   items: PropTypes.any,
+  item: PropTypes.any,
   updateMasterTime: PropTypes.func,
   seekMasterTime: PropTypes.func,
 };
@@ -220,7 +221,7 @@ function mapDispatchToProps(dispatch) {
     },
     updateMasterTime: _.debounce((time) => {
       dispatch(appActions.set('masterTime', time));
-    }, 200, {maxWait: 500}),
+    }, 200, { maxWait: 500 }),
     updGlobalPlay: (playing) => {
       dispatch(appActions.play(playing));
     }
