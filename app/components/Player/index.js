@@ -94,7 +94,7 @@ class PlayerControlExample extends Component {
     const item = this.props.item || {};
     const prevItem = prevProps.item || {};
 
-    if (prevProps.play && !this.props.play) {
+    if (prevProps.play && !this.props.play || !this.pause.play) {
       this.pause();
     }
 
@@ -125,6 +125,12 @@ class PlayerControlExample extends Component {
     // Mute
     if (item.get('muted') !== prevItem.get('muted')) {
       this.setMuted(item.get('muted'))();
+    }
+
+    // Playback
+    if (prevProps.playbackRate !== this.props.playbackRate) {
+      console.log('change playbackrate', this.props.playbackRate);
+      this.setPlaybackRate(this.props.playbackRate);
     }
   }
 
@@ -177,6 +183,12 @@ class PlayerControlExample extends Component {
       const { player } = this.myRef.current.getState();
       const playbackRate = player.playbackRate;
       this.myRef.current.playbackRate = playbackRate + steps;
+    };
+  }
+
+  setPlaybackRate(playbackRate) {
+    return () => {
+      this.myRef.current.playbackRate = playbackRate;
     };
   }
 

@@ -1,2 +1,3 @@
 #!/bin/bash
-npx http-server -p8080
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+npx http-server "${DIR}"

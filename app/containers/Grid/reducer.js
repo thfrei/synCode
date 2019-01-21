@@ -5,7 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
-import { VIDEO, AUDIO, EDITOR, CONTROL, UPDATE_OFFSET, UPDATE_ITEM } from './constants';
+import { VIDEO, AUDIO, EDITOR, CONTROL, UPDATE_OFFSET, UPDATE_ITEM, SAVE_STATE, LOAD_STATE } from './constants';
 
 export const initialState = fromJS({
   nrOfGridItems: 6,
@@ -57,6 +57,25 @@ function gridReducer(state = initialState, action) {
           }
         )
       );
+    }
+    case SAVE_STATE: {
+      try {
+        localStorage.setItem('grid', JSON.stringify(state.toJS()));
+        return state;
+      } catch (err) {
+        console.error(err);
+        return state;
+      }
+    }
+    case LOAD_STATE: {
+      try {
+        const savedState = JSON.parse(localStorage.getItem('grid'));
+        console.log('load state', savedState, fromJS(savedState));
+        return fromJS(savedState);
+      } catch (err) {
+        console.error(err);
+        return state;
+      }
     }
     default:
       return state;

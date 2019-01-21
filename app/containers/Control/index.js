@@ -18,11 +18,12 @@ import makeSelectControl from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { play, setTime, syncSetAndMasterTime, masterTimeMinus } from '../App/actions';
-import { selectGlobalMasterTime } from '../App/selectors';
+import { play, setTime, syncSetAndMasterTime, masterTimeMinus, add } from '../App/actions';
+import { selectGlobalMasterTime, selectGlobalPlaybackRate } from '../App/selectors';
 import { formatVideoTime, insertAtCaret } from '../../utils/misc';
 import { GLOBAL_EDITOR_ID } from '../Editor/constants';
 import { Modal, Table, Header } from 'semantic-ui-react';
+import { saveState, loadState } from '../Grid/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 class Control extends React.Component {
@@ -31,6 +32,7 @@ class Control extends React.Component {
       <div>
         <Typography variant={"h5"}>
           Master: {formatVideoTime(this.props.masterTime)}
+          | PlaybackRate: {Math.round(this.props.playbackRate*100)}%
         </Typography>
         <Button variant="contained" onClick={() => this.props.dispatch(play(true))}>Play</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(play(false))}>||</Button>
@@ -42,6 +44,30 @@ class Control extends React.Component {
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(5))}>Master -5s</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(10))}>Master -10s</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(20))}>Master -20s</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', 0.1))}>++</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', -0.1))}>--</Button>
+        <br />
+        <Button variant="contained" onClick={() => this.props.dispatch(saveState())}>SAVE</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(loadState())}>LOAD</Button>
+        <br />
+        <Button variant="contained" onClick={() => this.props.dispatch(updateItem(1, 'muted', false))}>1</Button>        
+        
+        <Modal trigger={<Button variant="contained">Videos</Button>}>
+          <Paper>
+            <Modal.Header><Typography variant='h4'>Help</Typography></Modal.Header>
+            <Modal.Content image>
+              <Modal.Description>
+                <Typography variant={"body1"}>
+                  'play': 'alt+p', <br />
+                  'minus2': 'alt+h',<br />
+                  'plus2': 'alt+l',<br />
+                  'insertTime': 'alt+j',<br />
+                  'sync': 'alt+s',<br />
+                </Typography>
+              </Modal.Description>
+            </Modal.Content>
+          </Paper>
+        </Modal>
 
         <Modal trigger={<Button variant="contained">?</Button>}>
           <Paper>
@@ -71,6 +97,7 @@ Control.propTypes = {
 const mapStateToProps = createStructuredSelector({
   control: makeSelectControl(),
   masterTime: selectGlobalMasterTime,
+  playbackRate: selectGlobalPlaybackRate,
 });
 
 function mapDispatchToProps(dispatch) {

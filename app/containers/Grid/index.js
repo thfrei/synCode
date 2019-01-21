@@ -35,7 +35,7 @@ import Control from '../Control';
 import SidebarSettings from '../SidebarSettings';
 import Topbar from '../Topbar';
 import Editor from '../Editor';
-import { selectGlobalPlaying, selectGlobalSetTime, selectGlobalMasterTime } from '../App/selectors';
+import { selectGlobalPlaying, selectGlobalSetTime, selectGlobalMasterTime, selectGlobalPlaybackRate } from '../App/selectors';
 import { updateOffset } from './actions';
 import { togglePlay, syncSetAndMasterTime, masterTimeMinus, updateText } from '../App/actions';
 import { insertAtCaret, formatVideoTime } from '../../utils/misc';
@@ -73,11 +73,11 @@ class Grid extends React.Component {
     const rowHeight = parseInt(y / 13, 10) || 70;
 
     const map = {
-      'play': 'alt+p',
-      'minus2': 'alt+h',
-      'plus2': 'alt+l',
-      'insertTime': 'alt+j',
-      'sync': 'alt+s',
+      'play': ['alt+p', 'ctrl+alt+p', 'ctrl+alt+SPACE'],
+      'minus2': ['alt+h', 'ctrl+alt+h'],
+      'plus2': ['alt+l', 'ctrl+alt+l'],
+      'insertTime': ['alt+j', 'ctrl+alt+j'],
+      'sync': ['alt+s', 'ctrl+alt+s'],
     };
 
     const handlers = {
@@ -114,7 +114,7 @@ class Grid extends React.Component {
   }
 
   renderContent(item) {
-    const { globalPlay, setTime, ...rest } = this.props;
+    const { globalPlay, setTime, playbackRate, ...rest } = this.props;
 
     switch (item.get('type')) {
       case VIDEO:
@@ -125,6 +125,7 @@ class Grid extends React.Component {
             play={globalPlay}
             setTime={setTime}
             item={item}
+            playbackRate={playbackRate}
             {...rest}
           />
         );
@@ -153,6 +154,7 @@ const mapStateToProps = (state, props) =>
     globalPlay: selectGlobalPlaying,
     setTime: selectGlobalSetTime,
     masterTime: selectGlobalMasterTime,
+    playbackRate: selectGlobalPlaybackRate,
   });
 
 function mapDispatchToProps(dispatch) {

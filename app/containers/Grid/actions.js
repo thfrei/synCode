@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, UPDATE_OFFSET, UPDATE_ITEM } from './constants';
+import { DEFAULT_ACTION, UPDATE_OFFSET, UPDATE_ITEM, LOAD_STATE, SAVE_STATE } from './constants';
 
 export function defaultAction() {
   return {
@@ -27,4 +27,16 @@ export function updateItem(id, property, value) {
     property,
     value,
   };
+}
+
+export function loadState() {
+  return {
+    type: LOAD_STATE,
+  }
+}
+
+export function saveState() {
+  return {
+    type: SAVE_STATE,
+  }
 }
