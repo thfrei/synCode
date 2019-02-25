@@ -28,6 +28,14 @@ import { saveState, loadState, muteItem, updateItem } from '../Grid/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 class Control extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      minus: 2,
+    }
+  }
+
   render() {
     return (
       <div>
@@ -42,20 +50,24 @@ class Control extends React.Component {
         <Button variant="contained" onClick={() => this.props.dispatch(syncSetAndMasterTime())}>Sync</Button>
         <Button variant="contained" onClick={() => insertAtCaret(GLOBAL_EDITOR_ID, formatVideoTime(this.props.masterTime, false))}>h:mm:ss</Button>
         <br />
-        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(5))}>Master -5s</Button>
-        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(10))}>Master -10s</Button>
-        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(20))}>Master -20s</Button>
+        X: <input type="text" value={this.state.minus} onChange={(e) => {e.preventDefault(); this.setState({minus: e.target.value});}} style={{color: 'white', width: '30px'}}/>
+        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(this.state.minus))}>-x s</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(5))}>-5s</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(10))}>-10s</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(20))}>-20s</Button>
+        <br />
         <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', 0.1))}>++</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', -0.1))}>--</Button>
-        <br />
-        <Button variant="contained" onClick={() => this.props.dispatch(saveState())}>SAVE</Button>
-        <Button variant="contained" onClick={() => this.props.dispatch(loadState())}>LOAD</Button>
         <br />
         <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(1)}>V1</Button>
         <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(2)}>V2</Button>
         <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(3)}>V3</Button>
         <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(4)}>A2</Button>
         <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(5)}>A5</Button>
+        <br />
+        <Button variant="contained" onClick={() => this.props.dispatch(saveState())}>SAVE</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(loadState())}>LOAD</Button>
+        
         
         {/* <Modal trigger={<Button variant="contained">Videos</Button>}>
           <Paper>
