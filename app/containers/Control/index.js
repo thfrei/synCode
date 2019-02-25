@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import * as _ from 'lodash';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -23,7 +24,7 @@ import { selectGlobalMasterTime, selectGlobalPlaybackRate } from '../App/selecto
 import { formatVideoTime, insertAtCaret } from '../../utils/misc';
 import { GLOBAL_EDITOR_ID } from '../Editor/constants';
 import { Modal, Table, Header } from 'semantic-ui-react';
-import { saveState, loadState } from '../Grid/actions';
+import { saveState, loadState, muteItem, updateItem } from '../Grid/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 class Control extends React.Component {
@@ -50,24 +51,24 @@ class Control extends React.Component {
         <Button variant="contained" onClick={() => this.props.dispatch(saveState())}>SAVE</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(loadState())}>LOAD</Button>
         <br />
-        <Button variant="contained" onClick={() => this.props.dispatch(updateItem(1, 'muted', false))}>1</Button>        
+        <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(1)}>V1</Button>
+        <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(2)}>V2</Button>
+        <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(3)}>V3</Button>
+        <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(4)}>A2</Button>
+        <Button variant="contained" onClick={this.unmuteThisAndMuteOthers(5)}>A5</Button>
         
-        <Modal trigger={<Button variant="contained">Videos</Button>}>
+        {/* <Modal trigger={<Button variant="contained">Videos</Button>}>
           <Paper>
             <Modal.Header><Typography variant='h4'>Help</Typography></Modal.Header>
             <Modal.Content image>
               <Modal.Description>
                 <Typography variant={"body1"}>
-                  'play': 'alt+p', <br />
-                  'minus2': 'alt+h',<br />
-                  'plus2': 'alt+l',<br />
-                  'insertTime': 'alt+j',<br />
-                  'sync': 'alt+s',<br />
+                  -
                 </Typography>
               </Modal.Description>
             </Modal.Content>
           </Paper>
-        </Modal>
+        </Modal> */}
 
         <Modal trigger={<Button variant="contained">?</Button>}>
           <Paper>
@@ -87,6 +88,18 @@ class Control extends React.Component {
         </Modal>
       </div>
     );
+  }
+
+
+  unmuteThisAndMuteOthers = (id) => {
+    return () => {
+      const allItems = [1,2,3,4,5];
+      const passiveItems = _.filter(allItems, (item) => item !== id);
+      this.props.dispatch(updateItem(id, 'muted', false))
+      passiveItems.forEach(item => {
+        this.props.dispatch(updateItem(item, 'muted', true))
+      });
+    }
   }
 }
 

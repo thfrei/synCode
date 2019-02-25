@@ -10,24 +10,24 @@ import { VIDEO, AUDIO, EDITOR, CONTROL, UPDATE_OFFSET, UPDATE_ITEM, SAVE_STATE, 
 export const initialState = fromJS({
   nrOfGridItems: 6,
   items: [
-    gridItem(1, VIDEO, 0, 0, 8, 7),
-    gridItem(2, EDITOR, 8, 0, 4, 5),
-    gridItem(7, CONTROL, 8, 5, 4, 2),
-    gridItem(3, VIDEO, 0, 7, 4, 4),
-    gridItem(4, VIDEO, 4, 7, 4, 4),
-    gridItem(5, AUDIO, 8, 7, 4, 2),
-    gridItem(6, AUDIO, 8, 9, 4, 2),
+    gridItem(1, VIDEO, 0, 0, 8, 7, 'http://localhost:8080/V1.mp4'),
+    //gridItem(6, EDITOR, 8, 0, 4, 5),
+    gridItem(2, VIDEO, 0, 7, 4, 4, 'http://localhost:8080/V2.mp4'),
+    gridItem(3, VIDEO, 4, 7, 4, 4, 'http://localhost:8080/V3.mp4'),
+    gridItem(4, AUDIO, 8, 0, 4, 2, 'http://localhost:8080/A2.mp3'),
+    gridItem(5, AUDIO, 8, 2, 4, 2, 'http://localhost:8080/A5.mp3'),
+    gridItem(7, CONTROL, 8, 4, 4, 4),
   ],
   editable: false,
 });
 
-function gridItem(id, type, x, y, w, h) {
+function gridItem(id, type, x, y, w, h, source) {
   return {
     id, type, x, y, w, h,
     playing: false,
     fullscreen: false,
     offset: 0,
-    source: 'http://media.w3.org/2010/05/video/movie_300.webm',
+    source: source || 'http://media.w3.org/2010/05/video/movie_300.webm',
     static: true,
     muted: true,
     master: id === 1,
@@ -52,7 +52,7 @@ function gridReducer(state = initialState, action) {
         items => items.update(
           items.findIndex(item => item.get('id') === id),
           specificItem => {
-            console.log('spec', specificItem, value);
+            console.log('spec', specificItem.get('id'), specificItem, value);
             return specificItem.set(property, value);
           }
         )

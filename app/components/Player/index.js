@@ -94,11 +94,11 @@ class PlayerControlExample extends Component {
     const item = this.props.item || {};
     const prevItem = prevProps.item || {};
 
-    if (prevProps.play && !this.props.play || !this.pause.play) {
+    if (this.props.play === false && prevProps.play === true) {
       this.pause();
     }
 
-    if (!prevProps.play && this.props.play) {
+    if (this.props.play === true && prevProps.play === false) {
       this.play();
     }
 
@@ -106,6 +106,7 @@ class PlayerControlExample extends Component {
     if (this.props.setTime !== prevProps.setTime && this.props.setTime) {
       console.log('seek', this.props.setTime);
       this.seek(this.props.setTime + item.get('offset'))();
+      this.props.play ? this.play() : null;
     }
 
     // Offset
@@ -114,6 +115,7 @@ class PlayerControlExample extends Component {
       const seekTime = this.props.setTime + item.get('offset') || 0;
       console.log('offset', item.get('offset'), 'seekTime:', seekTime, player);
       this.seek(seekTime)();
+      this.props.play ? this.play() : null;
     }
 
     // Source
@@ -124,13 +126,15 @@ class PlayerControlExample extends Component {
 
     // Mute
     if (item.get('muted') !== prevItem.get('muted')) {
+      console.log('setMuted', item.get('muted'));
       this.setMuted(item.get('muted'))();
     }
 
     // Playback
-    if (prevProps.playbackRate !== this.props.playbackRate) {
-      console.log('change playbackrate', this.props.playbackRate);
-      this.setPlaybackRate(this.props.playbackRate);
+    if (this.props.playbackRate !== prevProps.playbackRate) {
+      console.log('change playbackrate id:', item.get('id') , this.props.playbackRate);
+      this.setPlaybackRate(this.props.playbackRate)();
+      this.props.play ? this.play() : null;
     }
   }
 
@@ -138,8 +142,8 @@ class PlayerControlExample extends Component {
     const { item } = this.props;
     // console.log('render player', item, this.props, this.myRef.current)
     return (
-      <div style={{ height: '100%', flexGrow: 1, }}>
-        <Typography variant="subtitle1">
+      <div style={{ height: '100%', flexGrow: 1}}>
+        <Typography variant="subtitle1" style={{backgroundColor: (item.get('muted') === false) ? 'green' : ''}}>
           {item.get('master') ? 'MASTER | ' : ''}{item.get('type')}
           | Offset: {item.get('offset')}
           | Time-Offset: {formatVideoTime(_.get(this.state.player, 'currentTime') - item.get('offset'))}
