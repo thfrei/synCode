@@ -20,12 +20,13 @@ export function updateOffset(id, time) {
   };
 }
 
-export function updateItem(id, property, value) {
+export function updateItem(id, property, value, toggle = false) {
   return {
     type: UPDATE_ITEM,
     id,
     property,
     value,
+    toggle,
   };
 }
 

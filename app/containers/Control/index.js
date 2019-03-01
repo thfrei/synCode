@@ -102,7 +102,6 @@ class Control extends React.Component {
     );
   }
 
-
   unmuteThisAndMuteOthers = (id) => {
     return () => {
       const allItems = [1,2,3,4,5];
@@ -113,6 +112,8 @@ class Control extends React.Component {
       });
     }
   }
+
+ 
 }
 
 Control.propTypes = {

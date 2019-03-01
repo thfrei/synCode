@@ -47,13 +47,17 @@ function gridReducer(state = initialState, action) {
         )
       );
     case UPDATE_ITEM: {
-      const { id, property, value } = action;
+      const { id, property, value, toggle } = action;
       return state.update('items',
         items => items.update(
           items.findIndex(item => item.get('id') === id),
           specificItem => {
             console.log('spec', specificItem.get('id'), specificItem, value);
-            return specificItem.set(property, value);
+            if (toggle) {
+              return specificItem.set(property, !specificItem.get(property));
+            } else {
+              return specificItem.set(property, value);
+            }
           }
         )
       );
