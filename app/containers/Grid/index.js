@@ -36,7 +36,7 @@ import SidebarSettings from '../SidebarSettings';
 import Topbar from '../Topbar';
 import Editor from '../Editor';
 import { selectGlobalPlaying, selectGlobalSetTime, selectGlobalMasterTime, selectGlobalPlaybackRate } from '../App/selectors';
-import { updateOffset } from './actions';
+import { updateOffset, updateItem } from './actions';
 import { togglePlay, syncSetAndMasterTime, masterTimeMinus, updateText } from '../App/actions';
 import { insertAtCaret, formatVideoTime } from '../../utils/misc';
 import { GLOBAL_EDITOR_ID } from '../Editor/constants';
@@ -73,11 +73,16 @@ class Grid extends React.Component {
     const rowHeight = parseInt(y / 13, 10) || 70;
 
     const map = {
-      'play': ['alt+p', 'ctrl+alt+p', 'ctrl+alt+SPACE'],
-      'minus2': ['alt+h', 'ctrl+alt+h'],
-      'plus2': ['alt+l', 'ctrl+alt+l'],
+      'play': ['alt+p', 'ctrl+alt+p', 'ctrl+alt+SPACE', 'p'],
+      'minus2': ['alt+h', 'ctrl+alt+h', 'h'],
+      'plus2': ['alt+l', 'ctrl+alt+l', 'l'],
       'insertTime': ['alt+j', 'ctrl+alt+j'],
       'sync': ['alt+s', 'ctrl+alt+s'],
+      'toggle1': ['1'],
+      'toggle2': ['2'],
+      'toggle3': ['3'],
+      'toggle4': ['4'],
+      'toggle5': ['5'],
     };
 
     const handlers = {
@@ -86,6 +91,11 @@ class Grid extends React.Component {
       'plus2': () => this.props.dispatch(masterTimeMinus(-2)),
       'insertTime': () => insertAtCaret(GLOBAL_EDITOR_ID, formatVideoTime(this.props.masterTime, false)),
       'sync': () => this.props.dispatch(syncSetAndMasterTime()),
+      'toggle1': () => this.props.dispatch(updateItem(1, 'muted', undefined, true)),
+      'toggle2': () => this.props.dispatch(updateItem(2, 'muted', undefined, true)),
+      'toggle3': () => this.props.dispatch(updateItem(3, 'muted', undefined, true)),
+      'toggle4': () => this.props.dispatch(updateItem(4, 'muted', undefined, true)),
+      'toggle5': () => this.props.dispatch(updateItem(5, 'muted', undefined, true)),
     }
 
     return (

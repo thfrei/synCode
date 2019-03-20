@@ -43,7 +43,7 @@ class Control extends React.Component {
           Master: {formatVideoTime(this.props.masterTime)}
           | PlaybackRate: {Math.round(this.props.playbackRate*100)}%
         </Typography>
-        <Button variant="contained" onClick={() => this.props.dispatch(play(true))}>Play</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(play(true))}>Play (p)</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(play(false))}>||</Button>
         {/* <Button variant="contained" onClick={() => this.props.dispatch(setTime(40))}>40</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(setTime(10))}>10</Button> */}
@@ -55,32 +55,31 @@ class Control extends React.Component {
         <Button variant="contained" onClick={() => this.props.dispatch(loadState())}>LOAD</Button>
         <br />
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(1))}>-1s</Button>
-        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(2))}>-2s</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(2))}>-2s (h)</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(5))}>-5s</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(10))}>-10s</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(20))}>-20s</Button>
         <br />
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(-1))}>+1s</Button>
-        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(-2))}>+2s</Button>
+        <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(-2))}>+2s (l)</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(-5))}>+5s</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(-10))}>+10s</Button>
         <Button variant="contained" onClick={() => this.props.dispatch(masterTimeMinus(-20))}>+20s</Button>
-        <br />
-        <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', 0.5))}>++50%</Button>
-        <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', -0.5))}>--50%</Button>
-        <br />Ton an: 
-        <Button variant="contained" onClick={this.unmute(1)}>V1</Button>
-        <Button variant="contained" onClick={this.unmute(2)}>V2</Button>
-        <Button variant="contained" onClick={this.unmute(3)}>V3</Button>
-        <Button variant="contained" onClick={this.unmute(4)}>A2</Button>
-        <Button variant="contained" onClick={this.unmute(5)}>A5</Button>
-        <br />Stumm:
-        <Button variant="contained" onClick={this.mute(1)}>V1</Button>
-        <Button variant="contained" onClick={this.mute(2)}>V2</Button>
-        <Button variant="contained" onClick={this.mute(3)}>V3</Button>
-        <Button variant="contained" onClick={this.mute(4)}>A2</Button>
-        <Button variant="contained" onClick={this.mute(5)}>A5</Button>
-        <br />  
+        
+        <Typography variant={"body1"}>
+          Playback:
+          <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', 0.5))}>++50%</Button>
+          <Button variant="contained" onClick={() => this.props.dispatch(add('playbackRate', -0.5))}>--50%</Button>
+        </Typography>
+        
+        <Typography variant={"body1"}>
+          Toggle Sound: 
+          <Button variant="contained" onClick={this.toggleSound(1)}>V1 (1)</Button>
+          <Button variant="contained" onClick={this.toggleSound(2)}>V2 (2)</Button>
+          <Button variant="contained" onClick={this.toggleSound(3)}>V3 (3)</Button>
+          <Button variant="contained" onClick={this.toggleSound(4)}>A2 (4)</Button>
+          <Button variant="contained" onClick={this.toggleSound(5)}>A5 (5)</Button>
+        </Typography>  
         {/* <Modal trigger={<Button variant="contained">Videos</Button>}>
           <Paper>
             <Modal.Header><Typography variant='h4'>Help</Typography></Modal.Header>
@@ -100,10 +99,9 @@ class Control extends React.Component {
             <Modal.Content image>
               <Modal.Description>
                 <Typography variant={"body1"}>
-                  'play': 'alt+p', <br />
-                  'minus2': 'alt+h',<br />
-                  'plus2': 'alt+l',<br />
-                  'insertTixme': 'alt+j',<br />
+                  Play: p
+                  'minus2': 'h',<br />
+                  'plus2': 'l',<br />
                   'sync': 'alt+s',<br />
                 </Typography>
                 
@@ -114,19 +112,17 @@ class Control extends React.Component {
             </Modal.Content>
           </Paper>
         </Modal>
+        
+        <Typography variant={"body1"}>
+          Kurzanleitung: Taste "p" (Play), "1"-"5" um Videos und Sound an/auszuschalten, "h"/"l" -2/+2s
+        </Typography>
       </div>
     );
   }
 
-  mute = (id) => {
+  toggleSound = (id) => {
     return () => {
-      this.props.dispatch(updateItem(id, 'muted', true));
-    }
-  }
-
-  unmute = (id) => {
-    return () => {
-      this.props.dispatch(updateItem(id, 'muted', false));
+      this.props.dispatch(updateItem(id, 'muted', undefined, true));
     }
   }
  
