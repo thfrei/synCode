@@ -93,7 +93,7 @@ class Control extends React.Component {
           </Paper>
         </Modal> */}
 
-        <Modal trigger={<Button variant="contained">?</Button>}>
+        {/* <Modal trigger={<Button variant="contained">?</Button>}>
           <Paper>
             <Modal.Header><Typography variant='h4'>Help</Typography></Modal.Header>
             <Modal.Content image>
@@ -111,7 +111,7 @@ class Control extends React.Component {
               </Modal.Description>
             </Modal.Content>
           </Paper>
-        </Modal>
+        </Modal> */}
         
         <Typography variant={"body1"}>
           Kurzanleitung: Taste "p" (Play), "1"-"5" um Videos und Sound an/auszuschalten, "h"/"l" -2/+2s
