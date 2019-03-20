@@ -4,7 +4,7 @@ import { padStart, round } from 'lodash';
 export const formatVideoTime = (seconds, showms = true) => {
   try {
     const duration = moment.duration(seconds, 's');
-    const ms = showms ? `,${padStart(round(duration.milliseconds(), 0), 3, '0')}` : '';
+    const ms = showms ? `,${padStart(round(duration.milliseconds(), 0), 1, '0').substr(0,1)}` : '';
     return `${duration.hours()}:${padStart(duration.minutes(), 2, '0')}:${padStart(duration.seconds(), 2, '0')}${ms}`
   } catch (err) {
     console.error('err in formatvideoTime', err);
