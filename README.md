@@ -24,3 +24,14 @@ Toggle sound:
 Example:
 <img src="./syncode-sample.png" alt="syncode example" align="center" />
 
+## Develop
+
+```
+npm start
+```
+
+```
+npm run build
+```
+
+See https://github.com/react-boilerplate/react-boilerplate for more info about commands.
