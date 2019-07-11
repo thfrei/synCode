@@ -8,6 +8,17 @@ This is helpful for the following use cases:
 Get started:
 https://thomasfrei.de/synCode/v2/
 
+Shortcuts:
+```
+p   Play / Pause
+h   Jump 2s back
+l   Jump 2s forward
+
+Toggle sound:
+1   Video 1
+2,3,4,5   
+```
+
 Example:
-<img src="https://raw.githubusercontent.com/react-boilerplate/react-boilerplate-brand/master/assets/banner-metal-optimized.jpg" alt="react boilerplate banner" align="center" />
+<img src="./syncode-sample.png" alt="syncode example" align="center" />
 
