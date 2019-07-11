@@ -1,4 +1,6 @@
-#syncode
+# syncode
+
+## video encoding simultaneously
 
 Watch multiple videos simultaneously. 
 This is helpful for the following use cases:
