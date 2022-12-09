@@ -67,7 +67,7 @@
     "connected-react-router": "4.5.0",
     "cross-env": "5.2.0",
     "decko": "^1.2.0",
-    "express": "4.16.4",
+    "express": "4.17.3",
     "express-video": "^1.0.4",
     "fontfaceobserver": "2.0.13",
     "history": "4.7.2",
